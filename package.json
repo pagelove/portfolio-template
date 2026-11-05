@@ -7,7 +7,11 @@
   "scripts": {
     "preview": "node scripts/preview.mjs",
     "test": "node --test tests/*.test.mjs",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "verify": "node scripts/deploy.mjs --verify",
+    "test:deployment": "node --test tests/deployment.test.mjs",
+    "prepare": "node scripts/deploy.mjs --prepare"
   },
   "engines": {
     "node": ">=22"

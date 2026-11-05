@@ -1,5 +1,11 @@
- README.md                | 10 ++++++++++
- REVIEW.md                | 10 ++++++++++
- audit/CHANGELOG.md       |  5 +++++
- audit/source-sha256.json | 10 +++++-----
- 4 files changed, 30 insertions(+), 5 deletions(-)
+ .gitignore                |   2 +
+ README.md                 |   4 ++
+ REVIEW.md                 |   4 ++
+ audit/CHANGELOG.md        |   5 +++
+ audit/source-sha256.json  |  37 +++++++++++-----
+ docs/deployment.md        |  28 +++++++++---
+ package.json              |   8 +++-
+ scripts/deploy-lib.mjs    | 107 ++++++++++++++++++++++++++++++++++++++++++++++
+ scripts/deploy.mjs        |  34 +++++++++++++++
+ tests/deployment.test.mjs |  86 +++++++++++++++++++++++++++++++++++++
+ 10 files changed, 297 insertions(+), 18 deletions(-)

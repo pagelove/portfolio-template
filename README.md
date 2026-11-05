@@ -35,3 +35,7 @@ The disposable review copy contains only fictional data and is publicly accessib
 The review loads its sample records; draft editing/export is available and shared Save remains gated. Authentication and private-app access are not accepted merely because this fictional page loads.
 
 Pagelove native authentication has not been shown to fail. A401 on an application route with no matching write grant is not evidence that a separate identity system is required. Owner WebDAV authoring is already authenticated; browser actor/session integration and exact per-app read/write rules remain to be established before enabling protected functions. Public reading and local game play need no account by themselves.
+
+## Slide 4 build and deploy
+
+Use the repository URL, site hostname and private API token supplied in the generated prompt. After adapting and checking the app, run `node scripts/deploy.mjs --prepare`, then `node scripts/deploy.mjs --host YOUR-SITE.onpagelove.com`. The token is entered privately; existing records are retained. See [deployment instructions](docs/deployment.md) for verify/update commands, isolated paths and exact guarantees. No console-session handoff is required for trusted authoring deployment. Published browser code never contains the owner token.

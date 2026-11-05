@@ -2,3 +2,5 @@ node_modules/
 .preview-state/
 .env*
 *.log
+
+.local/
