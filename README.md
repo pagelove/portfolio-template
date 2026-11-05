@@ -25,3 +25,13 @@ Uses [Pagelove design-system](https://github.com/pagelove/design-system) at 0ca2
 Manage content reveals Edit profile/preferences. Changes to business identity, contact hours, biography, reporting month/category limits, weekly goals or service availability share the same HTML draft and conditional save as records. Category/tag/album and date controls filter derived views. Budget transfers are excluded from spending totals; fitness reports use Monday–Sunday civil dates; photo galleries include a keyboard viewer. Only controls relevant to this app are shown.
 
 The initial GitHub source is a reviewable candidate. The live editor is deliberately read-only until a supported authenticated persistence adapter is verified. Fictional loopback editing is available now; a DAV upload alone is not that adapter. No real confidential records should be placed in this template yet.
+
+## Live fictional review
+
+[Open this app preview](https://camel-boom-0460.onpagelove.com/template-review-20261105/portfolio-template/index.html) · [All app previews](https://camel-boom-0460.onpagelove.com/).
+
+The disposable review copy contains only fictional data and is publicly accessible. Source files were staged create-only, then verified through both owner WebDAV and public reads. Browser tasks loaded the deployed app. A390×844 browser viewport was checked; this is emulation, not physical-phone acceptance.
+
+The review loads its sample records; draft editing/export is available and shared Save remains gated. Authentication and private-app access are not accepted merely because this fictional page loads.
+
+Pagelove native authentication has not been shown to fail. A401 on an application route with no matching write grant is not evidence that a separate identity system is required. Owner WebDAV authoring is already authenticated; browser actor/session integration and exact per-app read/write rules remain to be established before enabling protected functions. Public reading and local game play need no account by themselves.

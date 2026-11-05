@@ -22,3 +22,8 @@ Domain control reconciliation: static record controls now match updated option c
 
 ## PACKAGE-006 — 2026-11-05T04:01:42.179Z
 Actor: Codex; reference approved execution / initial public candidate plan. Credential-pattern scan passed for the candidate text closure; source-sha256.json records 34 non-audit source files and hashes. Only fictional seeds and licensed assets included. Review boundaries in REVIEW.md retained. Standalone Bun dependency installation passed after the restricted temp-directory attempt failed; lifecycle scripts skipped. Initial public push to an empty main is planned, without force; runtime live acceptance remains pending. Staged review evidence follows.
+
+## LIVE-REVIEW-20261105 — 2026-11-05T13:39:22.183Z
+Actor: Codex. Plan before documentation: record actual disposable live preview, owner/public source readback and observed browser tasks, retain pending native browser-account/private-app acceptance, and reconcile hashes/diff before publishing documentation. No runtime permission or data change in this batch. Source: approved execution/live fixture and user auth clarification. Affected README.md, REVIEW.md, audit closure.
+
+Result: documented the verified fictional live review and remaining boundaries without claiming authenticated application acceptance. Separate isolated capability fixtures passed valid200, invalid422, missing428, stale412, concurrent200+412, selector206 and denied reads; those fixture results are not inherited by this app. Temporary fixture PUT access was closed with explicit Deny controls and anonymous401 readback. No credential included. Code and installed records unchanged by this documentation batch.

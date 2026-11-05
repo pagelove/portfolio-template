@@ -10,3 +10,13 @@ Actor: Codex. UTC: 2026-11-05T03:54:47.481Z. Design revision: 0ca2336353647b8d2d
 Publication/Draft is currently a presentation filter, not protected publication. Blog protected draft/revision routing, private account-scoped drafts and public booking intake need the production adapter before acceptance. Budget currency is USD; transfers are excluded. Fitness is nonclinical. Booking requests are not confirmed reservations and no delivery/payment/calendar integration is claimed.
 
 Initial source candidate; no live production release claim.
+
+## Live fictional review
+
+[Open this app preview](https://camel-boom-0460.onpagelove.com/template-review-20261105/portfolio-template/index.html) · [All app previews](https://camel-boom-0460.onpagelove.com/).
+
+The disposable review copy contains only fictional data and is publicly accessible. Source files were staged create-only, then verified through both owner WebDAV and public reads. Browser tasks loaded the deployed app. A390×844 browser viewport was checked; this is emulation, not physical-phone acceptance.
+
+The review loads its sample records; draft editing/export is available and shared Save remains gated. Authentication and private-app access are not accepted merely because this fictional page loads.
+
+Pagelove native authentication has not been shown to fail. A401 on an application route with no matching write grant is not evidence that a separate identity system is required. Owner WebDAV authoring is already authenticated; browser actor/session integration and exact per-app read/write rules remain to be established before enabling protected functions. Public reading and local game play need no account by themselves.
