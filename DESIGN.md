@@ -1,0 +1,3 @@
+# Alex Morgan
+
+Foundation: pagelove/design-system @ 0ca2336353647b8d2d726470046617163bbf6d67. Vendored styles are generated upstream; do not edit them independently. App-specific layout is site/styles.css. Semantic light/dark roles, Source Serif/Georgia headings and Inter/system controls. UI targets≥44px, native controls, reduced motion, no accent card rails or northeast arrows. Fictional subject-specific copy is in site/config.mjs and seed HTML. Publishing composition: type-led statement, readable editorial content; application pages use task-first collection/detail controls. No decorative section animation is required by the adopted app guidance.
