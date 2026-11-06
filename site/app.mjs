@@ -1,3 +1,4 @@
+import {sourceText} from './source-response.mjs';
 import {createRecovery} from './recovery.mjs';
 import {createDomain} from './domain.mjs';
 import {config} from './config.mjs';
@@ -70,8 +71,8 @@ $('#save').addEventListener('click',async()=>{
   const response=await fetch('./records/content.html',{method:'PUT',headers:{'Content-Type':'text/html; charset=utf-8','If-Match':oldETag},credentials:'same-origin',body:submitted});
   if(response.status===412)throw Error('Conflict: the source changed. Your draft is retained. Export it, then reload and reapply your changes.');
   if(!response.ok)throw Error('Source rejected the save ('+response.status+'). Your draft is retained.');
-  const readback=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!readback.ok)throw Error('Saved response received, but readback is unavailable. Retain your draft and reload to reconcile.');
-  const accepted=parse(await readback.text());if(serialize(accepted,config)!==submitted)throw Error('The current source differs from the submitted snapshot. Export the draft and reconcile.');
+  const readback=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin',headers:{Range:'selector=#records'}});if(!readback.ok)throw Error('Saved response received, but readback is unavailable. Retain your draft and reload to reconcile.');
+  const accepted=parse(await sourceText(readback));if(serialize(accepted,config)!==submitted)throw Error('The current source differs from the submitted snapshot. Export the draft and reconcile.');
   etag=readback.headers.get('ETag');baseline=submitted;
   if(snapshot()===submitted){root=accepted;dirty=false;const cleared=drafts.remove();report(cleared?'Saved and verified on the source.':'Saved and verified on the source. Older local recovery could not be cleared; export before leaving.',!cleared);}else{report('Earlier snapshot saved. Newer edits remain unsaved.');remember();}
  }catch(error){remember();report(error.message+' No automatic retry was performed.',true);}finally{busy=false;render();}
@@ -81,5 +82,5 @@ $('#recover').addEventListener('click',()=>{try{const recovery=drafts.read();if(
 $('#download-draft').addEventListener('click',()=>download(drafts.read().value||snapshot(),config.id+'-draft.html'));
 window.addEventListener('beforeunload',e=>{if(dirty){remember();e.preventDefault();e.returnValue='';}});
 window.addEventListener('pagehide',()=>{if(dirty)remember();});
-async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await response.text());etag=response.headers.get('ETag');baseline=snapshot();const recovery=drafts.read();$('#recovery').hidden=!recovery.value;mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');if(!recovery.ok)report('Source loaded. Draft storage unavailable; export changes before leaving.',true);}catch(error){report(error.message,true);$('#manage').disabled=true;}}
+async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin',headers:{Range:'selector=#records'}});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await sourceText(response));etag=response.headers.get('ETag');baseline=snapshot();const recovery=drafts.read();$('#recovery').hidden=!recovery.value;mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');if(!recovery.ok)report('Source loaded. Draft storage unavailable; export changes before leaving.',true);}catch(error){report(error.message,true);$('#manage').disabled=true;}}
 init();
