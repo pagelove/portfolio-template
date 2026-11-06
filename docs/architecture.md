@@ -23,3 +23,6 @@ The current edition2.4 scope and maintenance acceptance record is DOCUMENT-FIRST
 
 ## Identity and sharing build
 Runtime domain authority remains the HTML aggregate. The sharing build derives public display name/headline/about from its Settings record; branding/site.json provides deployment, stable icon identity and template fallbacks. Generated head/OG/icon exports are derived publication assets, not another editable domain model. Rebuild static metadata after changing source settings or the deployment URL. No private source details enter OG images.
+
+## Product task views
+product.mjs derives readers, filters, stable #record URLs, reporting-period controls, sorting and export views from the same current HTML aggregate. product-logic.mjs owns pure date/order/export calculations. Transient view state never rewrites authoritative Settings. Remove undo restores only the removed row without overwriting subsequent edits. Visible CSV escapes spreadsheet formula prefixes; calendar export is explicitly date-only/tentative and does not reserve an appointment. Source contracts, local writer limits and privacy release gates remain unchanged.

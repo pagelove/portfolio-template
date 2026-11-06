@@ -1,3 +1,5 @@
+import {createProduct} from './product.mjs';
+import {civilToday} from './product-logic.mjs';
 import {sourceText} from './source-response.mjs';
 import {createRecovery} from './recovery.mjs';
 import {createDomain} from './domain.mjs';
@@ -5,23 +7,25 @@ import {config} from './config.mjs';
 import {validate,serialize,field,safeURL,money,parseDocument} from './model.mjs';
 const $=s=>document.querySelector(s), status=$('#status'), list=$('#collection'), dialog=$('#editor'), form=$('#edit-form');
 const acceptedWriter=location.hostname==='127.0.0.1';
-let root,etag,baseline='',editingId=null,busy=false,dirty=false,mode='published';
+let root,etag,baseline='',editingId=null,busy=false,dirty=false,mode='published',lastRemoved=null;
 const draftKey='pagelove-draft:'+config.id+':'+location.origin+location.pathname;
 const report=(message,error=false)=>{status.textContent=message;status.dataset.error=String(error);};
 const drafts=createRecovery(()=>sessionStorage,draftKey);
 function parse(text){return parseDocument(text,config);}
 function snapshot(){return serialize(root,config);}
 function remember(){const stored=drafts.write(snapshot());if(!stored)report('Draft storage unavailable. Export your work before leaving.',true);return stored;}
-function edited(){dirty=true;const stored=remember();render();report(stored?'Unsaved changes. Save to confirm them on the source.':'Unsaved changes. Draft storage unavailable; export your work before leaving.',!stored);}
+function edited(){dirty=snapshot()!==baseline;if(!dirty){const cleared=drafts.remove();render();report(cleared?'Changes match the loaded source.':'Changes match the loaded source. An older recovery copy could not be cleared.',!cleared);return;}const stored=remember();render();report(stored?'Unsaved changes. Save to confirm them on the source.':'Unsaved changes. Draft storage unavailable; export your work before leaving.',!stored);}
 function rows(){return [...root.children].filter(r=>r.id!=='r-settings');}
-const domain=createDomain(config,{getRoot:()=>root,replace:candidate=>{validate(candidate,config);root=candidate;edited();},rerender:()=>render()});
+const domain=createDomain(config,{getRoot:()=>root,replace:candidate=>{validate(candidate,config);root=candidate;edited();},rerender:()=>render(),viewValue:key=>product.viewValue(key)});
+const product=createProduct(config,{getRoot:()=>root,rerender:()=>render(),report,photo:row=>domain.view(row),undo:()=>{if(!lastRemoved||root.querySelector('#'+CSS.escape(lastRemoved.record.id))){report('That record is already present.');return;}const next=lastRemoved.nextId&&root.querySelector('#'+CSS.escape(lastRemoved.nextId));root.insertBefore(lastRemoved.record.cloneNode(true),next||root.querySelector('#r-settings'));lastRemoved=null;edited();}});
 function download(text,name,type='text/html'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 function button(text,fn){const b=node('button',text,'pl-button pl-button--outlined pl-button--md');b.type='button';b.addEventListener('click',fn);return b;}
 function render(){
  const query=$('#search').value.toLowerCase().trim();list.replaceChildren();
  domain.render(root,mode);
- const visible=rows().filter(row=>domain.include(row)).filter(r=>(mode==='edit'||!config.publishing||field(r,'state')==='Published')&&r.textContent.toLowerCase().includes(query));
+ const visible=product.order(rows().filter(row=>domain.include(row)&&product.include(row)).filter(r=>(mode==='edit'||!config.publishing||field(r,'state')==='Published')&&r.textContent.toLowerCase().includes(query)));
+ domain.syncVisible?.(visible);product.render(root,mode,visible);
  $('#result-count').textContent=visible.length+' '+(visible.length===1?config.noun:config.plural);
  for(const row of visible){const card=node('article',undefined,'record');card.dataset.recordId=row.id;
   const image=field(row,'image');if(image){const img=node('img');img.src=safeURL(image,{image:true});img.alt=field(row,'alt')||field(row,config.titleField);img.loading='lazy';card.append(img);}
@@ -30,23 +34,18 @@ function render(){
    const value=field(row,f.key);if(!value)continue;const p=node('p',value,['body','description','notes'].includes(f.key)?'record-copy':'record-meta');p.dataset.field=f.key;if(!['body','description','notes','tagline'].includes(f.key))p.prepend(node('strong',f.label+': '));body.append(p);
   }
   if(field(row,'link')){const a=node('a',config.linkLabel||'Open link','pl-button pl-button--strong pl-button--md');a.href=safeURL(field(row,'link'));body.append(a);}
-  if(mode==='edit'){const controls=node('div',undefined,'actions');controls.append(button('Edit',()=>openEditor(row)),button('Move up',()=>move(row,-1)),button('Move down',()=>move(row,1)),button('Remove',()=>{if(confirm('Remove this '+config.noun+' from the working draft? Save to apply the change.')){row.remove();edited();}}));body.append(controls);}
+  if(mode==='edit'){const controls=node('div',undefined,'actions');controls.append(button('Edit',()=>openEditor(row)),button('Move up',()=>move(row,-1)),button('Move down',()=>move(row,1)),button('Remove',()=>{if(confirm('Remove this '+config.noun+' from the working draft? Save to apply the change.')){lastRemoved={record:row.cloneNode(true),nextId:row.nextElementSibling?.id};row.remove();edited();product.removed(field(row,config.titleField));}}));const ordered=rows(),position=ordered.indexOf(row);controls.children[1].disabled=position===0;controls.children[2].disabled=position===ordered.length-1;body.append(controls);}
   if(config.id==='photos'&&field(row,'image'))body.append(button('View photo',()=>domain.view(row)));
-  card.append(body);list.append(card);
+  card.append(body);product.decorate(card,row);list.append(card);
  }
- if(!visible.length)list.append(node('p','No matching '+config.plural+'. Change the search'+(mode==='edit'?' or add one.':'.')));
- $('#manage').setAttribute('aria-pressed',String(mode==='edit'));$('#manage').textContent=mode==='edit'?'View published':'Manage content';
+ if(!visible.length)list.append(node('p',['budget','fitness'].includes(config.id)?'No '+config.plural+' in this view. Change the reporting period or filters, or add a record.':'No matching '+config.plural+'. Clear filters or change the search'+(mode==='edit'?' or add one.':'.')));
+ $('#manage').setAttribute('aria-pressed',String(mode==='edit'));$('#manage').textContent=mode==='edit'?'Preview':'Edit content';
  document.querySelectorAll('[data-edit-only]').forEach(e=>e.hidden=mode!=='edit');$('#save').disabled=!dirty||busy||!acceptedWriter;
- if(false&&config.id==='budget'){
-  const income=rows().filter(r=>field(r,'kind')==='Income').reduce((a,r)=>a+money(field(r,'amount')),0),expenses=rows().filter(r=>field(r,'kind')==='Expense').reduce((a,r)=>a+money(field(r,'amount')),0);
-  $('#summary').textContent='Recorded income: '+(income/100).toFixed(2)+' USD · Expenses: '+(expenses/100).toFixed(2)+' USD · Balance: '+((income-expenses)/100).toFixed(2)+' USD. Manual records only; no bank connection.';
- }
- if(false&&config.id==='fitness')$('#summary').textContent='Total logged activity: '+rows().reduce((a,r)=>a+Number(field(r,'minutes')),0)+' minutes. Each dated activity remains the source of this total.';
 }
-function move(row,direction){const other=direction<0?row.previousElementSibling:row.nextElementSibling;if(!other)return;direction<0?root.insertBefore(row,other):root.insertBefore(other,row);edited();}
+function move(row,direction){const ordered=rows(),other=ordered[ordered.indexOf(row)+direction];if(!other)return;direction<0?root.insertBefore(row,other):root.insertBefore(other,row);edited();}
 function openEditor(row){
  editingId=row?.id||null;form.reset();$('#editor-title').textContent=row?'Edit '+config.noun:'Add '+config.noun;
- for(const f of config.fields){const control=form.elements.namedItem(f.key);control.value=row?field(row,f.key):(f.default||'');}
+ for(const f of config.fields){const control=form.elements.namedItem(f.key);control.value=row?field(row,f.key):(f.default||(f.key==='date'?product.defaultDate():''));}
  $('#editor-error').textContent='';dialog.showModal();form.elements.namedItem(config.titleField)?.focus();
 }
 form.addEventListener('submit',e=>{e.preventDefault();try{
@@ -59,7 +58,7 @@ form.addEventListener('submit',e=>{e.preventDefault();try{
 $('#photo-upload')?.addEventListener('change',async e=>{let bitmap;try{const file=e.target.files[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>5000000)throw Error('Choose a PNG, JPEG or WebP image up to 5 MB.');bitmap=await createImageBitmap(file);if(bitmap.width*bitmap.height>25000000)throw Error('Image dimensions are too large.');const scale=Math.min(1,900/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);const value=canvas.toDataURL('image/jpeg',.78);if(value.length>350000)throw Error('Compressed image is too large; choose a smaller image.');form.elements.namedItem('image').value=value;$('#editor-error').textContent='Photo prepared locally. Add a description, then apply to draft.';}catch(error){$('#editor-error').textContent=error.message;}finally{bitmap?.close();e.target.value='';}});
 $('#cancel-edit').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('cancel',e=>{e.preventDefault();dialog.close();});
-$('#manage').addEventListener('click',()=>{mode=mode==='edit'?'published':'edit';render();report(mode==='edit'?(acceptedWriter?'Local preview: saves update only this fixture.':'Local editing only. Export your changes; live saving is not connected.'):'Sample content loaded.');});
+$('#manage').addEventListener('click',()=>{mode=mode==='edit'?'published':'edit';render();report(mode==='edit'?(acceptedWriter?'Local preview: saves update only this fixture.':'Local editing only. Export your changes; live saving is not connected.'):'Content loaded.');});
 $('#add').addEventListener('click',()=>openEditor(null));$('#search').addEventListener('input',render);
 // Midnight is dark-only; do not offer an unsupported light mode.
 $('#export').addEventListener('click',()=>download(snapshot(),config.id+'-records.html'));
