@@ -4,7 +4,7 @@ import {DOMParser} from 'linkedom';import {validate,parseDocument} from '../site
 const root=path.resolve(fileURLToPath(new URL('../site/',import.meta.url))),state=path.resolve(process.env.PREVIEW_STATE||'.preview-state/content.html'),port=Number(process.env.PORT||4174);
 await fs.mkdir(path.dirname(state),{recursive:true});try{await fs.access(state);}catch{await fs.copyFile(path.join(root,'records/content.html'),state);}
 const etag=bytes=>'"'+createHash('sha256').update(bytes).digest('hex')+'"';
-const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.ttf':'font/ttf'};
+const types={'.html':'text/html; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml','.ttf':'font/ttf','.woff2':'font/woff2','.png':'image/png','.ico':'image/x-icon','.webmanifest':'application/manifest+json','.json':'application/json'};
 let queue=Promise.resolve();
 const server=http.createServer(async(req,res)=>{try{
  const expected='127.0.0.1:'+port;if(req.headers.host!==expected){res.writeHead(403);return res.end('Invalid host');}

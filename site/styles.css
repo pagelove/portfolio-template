@@ -37,3 +37,79 @@ footer{padding-block:28px 48px;display:flex;flex-wrap:wrap;gap:24px;justify-cont
 @media(max-width:650px){.workspace>.toolbar,.workspace>.domain-filters{flex-basis:100%;width:100%}.workspace>.toolbar{margin-block:8px}.workspace>.domain-filters{margin-top:0}.hero{padding-block:28px 20px!important}}
 
 @media(max-width:650px){.topbar{flex-wrap:wrap;gap:12px}.brand{max-width:100%}.topbar .actions{flex:none;margin-inline-start:auto}.topbar .actions .pl-button{min-width:140px;overflow-wrap:normal}}
+
+/* Application compositions refreshed against the current Pagelove polish contract. */
+body{font-size:1rem;line-height:1.6}
+header,main,footer{width:min(calc(100% - var(--design-page-padding)*2),var(--design-content-width))}
+.topbar{min-height:88px;padding-block:20px;border-bottom:1px solid var(--border-regular)}
+.brand{font-size:1rem;line-height:1.5;letter-spacing:normal;gap:12px}
+.brand-mark{border:0;background:none;flex:none;width:36px;height:36px;border-radius:0;padding:0}
+.brand-mark img{display:block;width:100%;height:100%;border-radius:8px}
+.hero{padding-block:var(--design-page-padding) var(--design-section-gap);gap:20px 64px}
+.hero h1{max-width:16ch;font-size:var(--design-title-size);font-weight:400;line-height:1.1}
+.hero>p{font-size:1.125rem;line-height:1.65;color:var(--text-regular)}
+.hero .sample-note{font-size:var(--design-text-caption);color:var(--text-regular)}
+.workspace{padding-block:0 calc(var(--design-section-gap)*2);gap:0 var(--design-section-gap)}
+.workspace>.toolbar,.workspace>.domain-filters{margin-block:var(--design-row-padding)}
+.record{transition:border-color var(--design-transition-duration),background-color var(--design-transition-duration);box-shadow:none}
+.record:hover{border-color:var(--border-regular)}
+.record-meta,.search,.domain-filters label{font-size:var(--design-text-small)}
+.record-copy{max-width:65ch}
+.record .actions{gap:12px}
+.status,#result-count{font-size:var(--design-text-caption);line-height:1.6}
+.domain-profile{border-color:var(--border-regular);gap:16px 32px}
+.summary{font-size:1.125rem;padding:var(--design-panel-padding);border-color:var(--border-regular)}
+.report-table{font-size:var(--design-text-small)}
+.report-table th,.report-table td{padding-block:var(--design-row-padding)}
+input,select,textarea{border-color:var(--border-strong);border-radius:var(--design-radius-input)}
+footer{padding-block:var(--design-section-gap);border-color:var(--border-regular);font-size:var(--design-text-small)}
+[data-app=business] .hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}
+[data-app=business] .collection{display:block;border-top:1px solid var(--border-regular)}
+[data-app=business] .record{padding:var(--design-panel-padding) 0;border:0;border-bottom:1px solid var(--border-regular);border-radius:0;background:none}
+[data-app=business] .record-body{display:grid;grid-template-columns:minmax(180px,1fr) minmax(0,1.5fr);column-gap:48px;align-items:start}
+[data-app=business] .record h2{grid-column:1;grid-row:1/4;margin:0;font-size:1.75rem}
+[data-app=business] .record-body>p,[data-app=business] .record-body>.pl-button{grid-column:2}
+[data-app=business] .record-body>.pl-button{justify-self:start;margin-top:16px}
+[data-app=business] .record-body>.actions{grid-column:1/-1}
+[data-app=portfolio] .hero h1{max-width:15ch}
+[data-app=portfolio] .collection{gap:var(--design-section-gap)}
+[data-app=portfolio] .record:first-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:stretch}
+[data-app=portfolio] .record:first-child img{height:100%;min-height:340px;border:0;border-right:1px solid var(--border-regular)}
+[data-app=portfolio] .record:first-child .record-body{padding:var(--design-panel-padding)}
+[data-app=portfolio] .record:first-child h2{font-size:2rem}
+[data-app=links] .hero{padding-block:48px 32px}
+[data-app=links] .hero h1{max-width:16ch;margin-inline:auto}
+[data-app=links] .record{padding:20px 24px;border-color:var(--border-regular)}
+[data-app=links] .record h2{font-family:var(--design-body-family);font-size:1.125rem;font-weight:500}
+[data-app=links] .collection{gap:14px}
+[data-app=photos] .hero{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+[data-app=photos] .collection{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--design-section-gap)}
+[data-app=photos] .record{padding:0;overflow:hidden;border-color:var(--border-regular)}
+[data-app=photos] .record:first-child{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr)}
+[data-app=photos] .record:first-child img{height:100%;min-height:320px;border-radius:0;margin:0}
+[data-app=photos] .record img{height:260px;border-radius:0;margin:0}
+[data-app=photos] .record-body{padding:var(--design-panel-padding)}
+[data-app=photos] .record h2{font-size:1.5rem}
+[data-app=blog] .hero{padding-bottom:40px}
+[data-app=blog] .record:first-child{padding-top:var(--design-panel-padding)}
+[data-app=blog] .record:first-child h2{font-size:2.25rem;max-width:16ch}
+[data-app=blog] .record-copy{font-size:1rem;line-height:1.75}
+[data-app=booking] .collection{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--design-section-gap)}
+[data-app=booking] .record{max-width:none}
+[data-app=booking] .record h2{font-family:var(--design-body-family);font-size:1.5rem}
+[data-app=journal] .collection{max-width:920px}
+[data-app=journal] .record{padding:var(--design-panel-padding);border-color:var(--border-regular)}
+[data-app=journal] .record h2{font-size:2rem;max-width:24ch}
+[data-app=journal] .record-copy{max-width:60ch;line-height:1.8}
+[data-app=budget] .summary{border:0;border-radius:0;background:var(--background-surface-regular);font-size:1.25rem}
+[data-app=budget] .record{padding-block:var(--design-row-padding);border-color:var(--border-regular)}
+[data-app=budget] .record [data-field=amount]{font-size:1.75rem}
+[data-app=budget] .record h2{font-family:var(--design-body-family);font-weight:500}
+[data-app=fitness] .record:first-child{grid-column:1/-1}
+[data-app=fitness] .record [data-field=minutes]{font-size:2rem;line-height:1.25}
+[data-app=fitness] .record h2{font-family:var(--design-body-family);font-size:1.5rem}
+@media(max-width:900px){header,main,footer{width:calc(100% - 48px)}.hero{gap:20px 32px}}
+@media(max-width:650px){header,main,footer{width:calc(100% - 32px)}.topbar{min-height:76px;gap:16px}.hero{display:block!important;padding-block:32px 24px!important}.hero h1{font-size:var(--design-title-size-mobile);max-width:18ch}.hero>p{font-size:1rem}.workspace{padding-bottom:40px}.collection{grid-template-columns:minmax(0,1fr)!important}.record:first-child{grid-column:auto!important}.record-body{display:block!important}.record h2{font-size:1.5rem!important}[data-app=business] .record-body{display:block}[data-app=portfolio] .record:first-child,[data-app=photos] .record:first-child{display:block}[data-app=portfolio] .record:first-child img,[data-app=photos] .record:first-child img{min-height:0;height:auto;border:0}.record img{aspect-ratio:16/10;object-fit:cover}.record .actions{margin-top:20px}.summary{font-size:1rem!important}.brand{max-width:none;flex:1 1 160px}.topbar .actions{margin-inline-start:0}.dialog-actions{gap:8px;flex-wrap:wrap}}
+@media(prefers-reduced-motion:reduce){.record{transition:none}}
+
+@media(max-width:650px){.report-table caption{display:block;max-width:calc(100vw - 96px);white-space:normal;overflow-wrap:anywhere;position:sticky;left:0;font-size:1rem}}

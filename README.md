@@ -43,3 +43,7 @@ Use the repository URL, site hostname and private API token supplied in the gene
 ## Document-first development review
 
 Read [the edition2.4 project record](DOCUMENT-FIRST-REVIEW.md) for source authority, operation/recovery contracts, justified runtime exceptions and current acceptance limits. Plans and verification are recorded in audit/CHANGELOG.md. Local tests do not establish live privacy, authorization or physical-device acceptance.
+
+## Current design and sharing assets
+
+See DESIGN.md and branding/README.md. `npm run branding` rebuilds identity and OG assets from the pinned canonical renderer; set branding/site.json to the actual public URL before deploying elsewhere. The linked review demo uses fictional seed data and retains the documented runtime write/privacy limits.

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Identity and sharing assets</title>
+  <link rel="icon" href="../assets/identity/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles/app.css">
+  <style>
+    body{margin:0;padding:clamp(16px,4vw,56px)}
+    main{max-width:1200px;margin:auto}
+    h1{font-family:var(--design-heading-family)}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:32px}
+    .cards img{display:block;width:100%;height:auto}
+    .icons{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+    .icon-context{padding:24px;display:flex;gap:24px;align-items:center}
+    .light{background:#fff}.dark{background:#111}
+    p{max-width:75ch}h2,h3{font-size:1.25rem}
+    a{color:var(--link-text-default)}
+  </style>
+</head>
+<body><main>
+  <p><a href="designs.html">Design collection</a> · <a href="../docs/identity-and-sharing.md">Integration guide</a></p>
+  <h1>Identity and sharing assets</h1>
+  <p>Replaceable sample identity, shown in every supported design and mode. The default is Midnight / dark. App identity stays consistent when the design changes.</p>
+  <h2>One identity, light and dark browser contexts</h2>
+  <div class="icons"><div class="icon-context light" aria-label="light browser background"><img src="../assets/identity/favicon-16.png" width="16" height="16" alt="Sample favicon at 16 pixels"><img src="../assets/identity/favicon-32.png" width="32" height="32" alt="Sample favicon at 32 pixels"><img src="../assets/identity/favicon-48.png" width="48" height="48" alt="Sample favicon at 48 pixels"></div><div class="icon-context dark" aria-label="dark browser background"><img src="../assets/identity/favicon-16.png" width="16" height="16" alt="Sample favicon at 16 pixels"><img src="../assets/identity/favicon-32.png" width="32" height="32" alt="Sample favicon at 32 pixels"><img src="../assets/identity/favicon-48.png" width="48" height="48" alt="Sample favicon at 48 pixels"></div></div>
+  <p>Source: <a href="../branding/mark.svg">sample mark</a>. Exports: <a href="../assets/identity/favicon.ico">ICO</a>, <a href="../assets/identity/favicon.svg">SVG</a>, <a href="../assets/identity/apple-touch-icon.png">Apple touch icon</a>, <a href="../assets/identity/site.webmanifest">web app manifest</a>.</p>
+  <div class="cards"><section>
+  <h2>Midnight / dark · Default</h2>
+  <img width="1200" height="630" src="../designs/midnight/assets/social/dark.png" alt="Alex Morgan — Selected work. Thoughtfully made.">
+  <p><a href="../designs/midnight/assets/social/dark.source.svg">Editable SVG</a> · <a href="../designs/midnight/assets/social/dark.svg">Outlined SVG</a> · <a href="../designs/midnight/assets/social/dark.png">PNG</a></p>
+</section></div>
+  <h2>Default and page metadata</h2>
+  <p><a href="../assets/metadata/default.head.html">Default head markup</a> · <a href="../assets/metadata/default.json">Structured metadata</a></p>
+  <div class="cards"></div>
+  <p>Generated metadata uses the address in branding/site.json. Replace the illustrative identity and reserved example.com URL, rebuild, and check publicly hosted URLs before sharing.</p>
+</main></body></html>

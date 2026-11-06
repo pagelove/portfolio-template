@@ -352,7 +352,7 @@
   --link-text-default: var(--color-cornflower-blue-400);
   --link-text-hover: var(--color-cornflower-blue-300);
   --link-text-pressed: var(--color-cornflower-blue-200);
-  --link-text-visited: var(--color-cornflower-blue-500);
+  --link-text-visited: var(--color-cornflower-blue-400);
   --text-brand: var(--color-olive-300);
   --text-danger: var(--color-torch-red-300);
   --text-disabled: var(--color-polo-blue-600);
@@ -464,7 +464,7 @@
   --link-text-default: var(--color-cornflower-blue-400);
   --link-text-hover: var(--color-cornflower-blue-300);
   --link-text-pressed: var(--color-cornflower-blue-200);
-  --link-text-visited: var(--color-cornflower-blue-500);
+  --link-text-visited: var(--color-cornflower-blue-400);
   --text-brand: var(--color-olive-300);
   --text-danger: var(--color-torch-red-300);
   --text-disabled: var(--color-polo-blue-600);

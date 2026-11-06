@@ -1,0 +1,7 @@
+{
+  "classic": {"align": "left", "titleSize": 82, "titleWeight": 400, "frame": "rule"},
+  "editorial": {"align": "left", "titleSize": 84, "titleWeight": 400, "frame": "editorial"},
+  "forest": {"align": "left", "titleSize": 76, "titleWeight": 600, "frame": "panel"},
+  "midnight": {"align": "left", "titleSize": 84, "titleWeight": 600, "frame": "rule"},
+  "invitation": {"align": "center", "titleSize": 84, "titleWeight": 400, "frame": "invitation"}
+}

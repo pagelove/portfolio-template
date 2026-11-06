@@ -26,7 +26,7 @@ export function canonicalHTML(bytes, publicView = false) {
 }
 const equivalent = (name, a, b, pub = false) => name.endsWith('.html') ? canonicalHTML(a, false) === canonicalHTML(b, pub) : sha256(a) === sha256(b);
 const seed = name => /^(records|data|submissions|scores)\//.test(name);
-const type = name => ({'.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.json': 'application/json', '.webmanifest': 'application/manifest+json'}[path.extname(name)] || 'application/octet-stream');
+const type = name => ({'.html': 'text/html; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2':'font/woff2','.ttf':'font/ttf','.ico':'image/x-icon','.webmanifest':'application/manifest+json','.json': 'application/json', '.webmanifest': 'application/manifest+json'}[path.extname(name)] || 'application/octet-stream');
 const strong = etag => typeof etag === 'string' && /^"[^"\r\n]+"$/.test(etag);
 export async function readSite(dir) {
   const files = [];

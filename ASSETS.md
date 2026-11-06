@@ -7,3 +7,5 @@ Design refresh: Midnight independent theme and shared base/components from pagel
 Starter record imagery refreshed from pagelove/design-system @ dec4b08: designs/midnight/previews/workspace-dark.png, assets/previews/workspace-detail.png, assets/previews/workspace-settings.png. Unmodified MIT reference screenshots embedded as PNG data URLs. Reference imagery is labeled as a sample, not original client work; seed-only, existing user records remain preserved on deployment.
 
 Design variety update: selected Midnight/dark, source dec4b08d12b98261bb6b52d9bfeb07c876b8f89d; unchanged selected theme/guide plus licensed Inter, Fira Code families at400/500/600. All font OFL notices retained. Historical Midnight files/provenance remain historical; active imports follow docs/design-source.json.
+
+Current refresh: complete Midnight/dark, source f41f4476b636c3b353f024c2cb9a1e2067b7de6b. Canonical theme/components/base and WOFF2 fonts; licenses retained. Nine original app silhouettes were authored for this refresh; no Pagelove brand affiliation is implied. Social composition uses the selected upstream template, exact bundled font metrics and outlined exports.

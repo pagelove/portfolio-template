@@ -1,0 +1,57 @@
+{
+  "defaultDesign": "midnight",
+  "defaultMode": "dark",
+  "defaultImage": {
+    "url": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/social/default.png",
+    "width": 1200,
+    "height": 630,
+    "type": "image/png",
+    "alt": "Alex Morgan — Selected work. Thoughtfully made."
+  },
+  "designs": [
+    {
+      "design": "midnight",
+      "name": "Midnight",
+      "mode": "dark",
+      "prefix": "designs/midnight/assets/social/dark",
+      "image": {
+        "url": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/designs/midnight/assets/social/dark.png",
+        "width": 1200,
+        "height": 630,
+        "type": "image/png",
+        "alt": "Alex Morgan — Selected work. Thoughtfully made."
+      }
+    }
+  ],
+  "pages": [
+    "assets/metadata/default.json"
+  ],
+  "generatedFiles": [
+    "assets/identity/apple-touch-icon.png",
+    "assets/identity/favicon-16.png",
+    "assets/identity/favicon-32.png",
+    "assets/identity/favicon-48.png",
+    "assets/identity/favicon.ico",
+    "assets/identity/favicon.svg",
+    "assets/identity/icon-192.png",
+    "assets/identity/icon-512.png",
+    "assets/identity/maskable-512.png",
+    "assets/identity/site.webmanifest",
+    "assets/metadata/default.head.html",
+    "assets/metadata/default.json",
+    "assets/social/dark.layout.json",
+    "assets/social/dark.png",
+    "assets/social/dark.source.svg",
+    "assets/social/dark.svg",
+    "assets/social/default.layout.json",
+    "assets/social/default.png",
+    "assets/social/default.source.svg",
+    "assets/social/default.svg",
+    "assets/social/index.json",
+    "designs/midnight/assets/social/dark.layout.json",
+    "designs/midnight/assets/social/dark.png",
+    "designs/midnight/assets/social/dark.source.svg",
+    "designs/midnight/assets/social/dark.svg",
+    "examples/branding.html"
+  ]
+}

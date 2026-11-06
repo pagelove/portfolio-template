@@ -1,0 +1,32 @@
+{
+  "id": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/",
+  "name": "Alex Morgan",
+  "short_name": "Alex Morgan",
+  "description": "An independent designer working across identity, spaces and digital products.",
+  "lang": "en",
+  "start_url": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/",
+  "scope": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/",
+  "display": "standalone",
+  "background_color": "#1e293b",
+  "theme_color": "#1e293b",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

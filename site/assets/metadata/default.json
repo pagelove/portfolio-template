@@ -1,0 +1,21 @@
+{
+  "title": "Alex Morgan — Selected work. Thoughtfully made.",
+  "description": "An independent designer working across identity, spaces and digital products.",
+  "siteName": "Alex Morgan",
+  "locale": "en_US",
+  "url": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/",
+  "themeColor": "#1e293b",
+  "image": {
+    "url": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/social/default.png",
+    "width": 1200,
+    "height": 630,
+    "type": "image/png",
+    "alt": "Alex Morgan — Selected work. Thoughtfully made."
+  },
+  "icons": {
+    "svg": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/identity/favicon.svg",
+    "ico": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/identity/favicon.ico",
+    "apple": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/identity/apple-touch-icon.png"
+  },
+  "manifest": "https://kayak-draw-9549.onpagelove.com/onboarding/after/demos/design-refresh-20261106/portfolio/assets/identity/site.webmanifest"
+}

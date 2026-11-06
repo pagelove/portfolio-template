@@ -20,3 +20,6 @@ Optional stable article#r-settings, itemtype Settings:1, shares the same aggrega
 Complete format1 imports/fixture writes require one records aggregate as the sole body element; ambiguous roots, unrelated body content and duplicate DOM identities are rejected before replacement. Current source and HTML export remain usable when session recovery storage is blocked or full. A verified save remains verified even if clearing the old local recovery copy fails; the interface reports that limitation. Recovery contains HTML snapshots only and never becomes a competing model. See tests/document-first.test.mjs and audit/CHANGELOG.md for current evidence.
 
 The current edition2.4 scope and maintenance acceptance record is DOCUMENT-FIRST-REVIEW.md at repository root. It distinguishes local passes from live/privacy/device gates.
+
+## Identity and sharing build
+Runtime domain authority remains the HTML aggregate. The sharing build derives public display name/headline/about from its Settings record; branding/site.json provides deployment, stable icon identity and template fallbacks. Generated head/OG/icon exports are derived publication assets, not another editable domain model. Rebuild static metadata after changing source settings or the deployment URL. No private source details enter OG images.

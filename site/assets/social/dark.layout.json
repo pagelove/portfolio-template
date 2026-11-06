@@ -1,0 +1,17 @@
+{
+  "design": "midnight",
+  "mode": "dark",
+  "titleLines": [
+    "Selected work.",
+    "Thoughtfully made."
+  ],
+  "titleSize": 84,
+  "descriptionLines": [
+    "An independent designer working across identity, spaces and digital products."
+  ],
+  "fonts": [
+    "Inter",
+    "Inter"
+  ],
+  "safeInset": 64
+}
