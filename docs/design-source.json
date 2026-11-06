@@ -3,32 +3,12 @@
   "revision": "dec4b08d12b98261bb6b52d9bfeb07c876b8f89d",
   "design": "midnight",
   "mode": "dark",
-  "integration": "Independent theme, shared components/base; Inter-only font subset, licensed upstream files unchanged.",
+  "integration": "Complete independent selected theme plus shared base/components; local selected heading/body/code font families.",
   "files": [
-    {
-      "source": "styles/library-components.css",
-      "file": "library-components.css",
-      "sha256": "7acd3bc452b690e288145c8eb885379237e2401f04542a8b3e7f76cee46f133b"
-    },
-    {
-      "source": "styles/base.css",
-      "file": "base.css",
-      "sha256": "0f38ac245b5d2a24008b2fe572c1936598d82dd4931d2943ce341db0db515008"
-    },
     {
       "source": "designs/midnight/styles/theme.css",
       "file": "theme.css",
       "sha256": "d5a843bcec746058786ffdecef3e24cc1e75ec5f9b8a1e6b65781193b8742f5c"
-    },
-    {
-      "source": "LICENSE",
-      "file": "LICENSE",
-      "sha256": "25768f0f5a730893110ab62e341ecb3f1b7171251a8695027c28bcb8c6223ff1"
-    },
-    {
-      "source": "NOTICE.md",
-      "file": "NOTICE.md",
-      "sha256": "64c68a9d4ad430d7a3291b37b5e405e6436cb20d53acf6972643269ddde75cea"
     },
     {
       "source": "designs/midnight/DESIGN.md",
@@ -51,9 +31,19 @@
       "sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
     },
     {
-      "source": "assets/fonts/inter-OFL.txt",
-      "file": "assets/fonts/inter-OFL.txt",
-      "sha256": "78c5db5075157265b6c50efe8532587adfc6f5f2ea7bae40acfa067e2e684a7c"
+      "source": "assets/fonts/firacode-400.ttf",
+      "file": "assets/fonts/firacode-400.ttf",
+      "sha256": "edc273e94e72c8ee4279c8406f65373d96c518e3fea9cc3f121fed51283e0e70"
+    },
+    {
+      "source": "assets/fonts/firacode-500.ttf",
+      "file": "assets/fonts/firacode-500.ttf",
+      "sha256": "f50a6f8bc4518eb4a3df9c9726f33d37ef73f7bc6f2ac845cf772c350cfe38cb"
+    },
+    {
+      "source": "assets/fonts/firacode-600.ttf",
+      "file": "assets/fonts/firacode-600.ttf",
+      "sha256": "a4d23253c085549ee11a66a18f77aaa5703ebb44bcb4739c4c53c3f26040d863"
     }
   ]
 }

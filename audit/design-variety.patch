@@ -1,0 +1,413 @@
+diff --git a/ASSETS.md b/ASSETS.md
+index bb5161e..f4df538 100644
+--- a/ASSETS.md
++++ b/ASSETS.md
+@@ -5,3 +5,5 @@ Pagelove styles: https://github.com/pagelove/design-system/tree/0ca2336353647b8d
+ Design refresh: Midnight independent theme and shared base/components from pagelove/design-system at dec4b08d12b98261bb6b52d9bfeb07c876b8f89d; MIT notices retained. Local Inter400/500/600 fonts are OFL licensed with included inter-OFL.txt. No external font service.
+ 
+ Starter record imagery refreshed from pagelove/design-system @ dec4b08: designs/midnight/previews/workspace-dark.png, assets/previews/workspace-detail.png, assets/previews/workspace-settings.png. Unmodified MIT reference screenshots embedded as PNG data URLs. Reference imagery is labeled as a sample, not original client work; seed-only, existing user records remain preserved on deployment.
++
++Design variety update: selected Midnight/dark, source dec4b08d12b98261bb6b52d9bfeb07c876b8f89d; unchanged selected theme/guide plus licensed Inter, Fira Code families at400/500/600. All font OFL notices retained. Historical Midnight files/provenance remain historical; active imports follow docs/design-source.json.
+diff --git a/DESIGN.md b/DESIGN.md
+index 9ca306f..1fb10a2 100644
+--- a/DESIGN.md
++++ b/DESIGN.md
+@@ -1,9 +1,11 @@
+-# Alex Morgan
++# portfolio — Midnight
+ 
+-Foundation: pagelove/design-system @ dec4b08d12b98261bb6b52d9bfeb07c876b8f89d. Selected design: Midnight / dark, the catalog default. Read the vendored design guide and provenance in docs/design-source.json. The independent theme is copied unchanged from upstream; do not edit generated values. Shared component/base CSS plus licensed local Inter fonts supply controls and typography. Midnight has no light mode.
++Selected: **Midnight / dark** from pagelove/design-system @ dec4b08d12b98261bb6b52d9bfeb07c876b8f89d. This assignment is part of the nine-app comparison covering all five designs and all eight available design/mode combinations. Use the complete selected design, never a palette mixed with Midnight.
+ 
+-Use plum page/panel/inset surfaces, semantic lavender actions, 44px targets, exported spacing, compact geometry and sans-serif headings. App-specific layout is site/styles.css: publishing pages use clear open introductions and service/project/article compositions; personal tools use compact task/report collections. Keep neutral borders, no decorative northeast arrows or accent card rails. Preserve document-first domain/persistence and draft/conflict contracts from docs/architecture.md. Images are documented sample reference artwork, never claims of client work.
++Start in dark mode. Use deep plum surfaces, pale lavender interaction accents, sans-serif headings and compact geometry. This design has no light mode; do not generate one by inversion. Use the bundled local fonts and product compositions. Separate page, panel and inset surfaces; keep metadata quiet but readable. Use the exported page/panel/row spacing and title scale consistently, with 44px action targets and brief 160ms interaction feedback. See docs/polish.md for the complete product contract.
+ 
+-Verification: check/test/prepare and responsive/browser tasks pending for this revision.
++Canonical selected theme and its guide are vendored unchanged under site/assets/pagelove-design/. Component/base CSS remains shared; local licensed heading/body/code fonts are included. docs/design-source.json records exact source hashes. App-specific semantic layout remains site/styles.css, using design geometry/spacing/type roles. Preserve neutral borders,44px controls, visible focus, reduced-motion rules and no decorative northeast arrows.
+ 
+-Verified: check, full model/domain/persistence/deployment tests and prepare pass. Browser desktop1280px/mobile320px layout, local Inter font loading, search empty/recovery, editor prefill/focus and Escape cancellation pass. See audit/design-refresh-checks.json. Physical-device/screen-reader and OS motion emulation not exercised; inherited reduced-motion rules retained.
++Domain format1/HTML authority, typed settings, recovery/concurrency and save/access limitations remain in docs/architecture.md. This design change does not migrate user records. Verification pending for this revision.
++
++Verified: full check/test/prepare pass;1280px and320px browser layouts, actual selected heading/body fonts, source theme geometry/colors, search no-results/recovery, editor focus and Escape cancellation pass. See audit/design-variety-checks.json. Existing persistence/access limitations remain; no live private-data deployment.
+diff --git a/REVIEW.md b/REVIEW.md
+index b0b0ca6..f49a26e 100644
+--- a/REVIEW.md
++++ b/REVIEW.md
+@@ -27,3 +27,6 @@ PASS: repository check, full tests and prepared-site credential scan; eleven add
+ 
+ ## Midnight design refresh
+ Adopted pagelove/design-system dec4b08 Midnight/dark. Browser screenshots and checks are in audit/. The redesign preserves format1 and existing persistence/access limitations. Existing deployed records remain preserved. Local check/tests/prepare and desktop/mobile/editor/search tasks pass; physical-device/screen-reader and OS motion emulation remain outside this review.
++
++## Design collection coverage
++Current assigned design/mode is recorded in DESIGN.md and docs/design-source.json. This supersedes the historical all-Midnight selection above. Local check/test/prepare and desktop/mobile/search/editor checks pass; see audit/design-variety-checks.json and audit/screenshots/variety-*.jpg. No records/persistence/access contract changes.
+diff --git a/audit/CHANGELOG.md b/audit/CHANGELOG.md
+index 2df4cb8..2c8cde8 100644
+--- a/audit/CHANGELOG.md
++++ b/audit/CHANGELOG.md
+@@ -47,3 +47,12 @@ DESIGN-REFRESH mobile correction 2026-11-06T00:03:23.885Z: at320px long brand pl
+ 
+ ## DESIGN-REFRESH-VERIFIED — 2026-11-06T00:06:09.390Z
+ Actor: Codex; reference DESIGN-REFRESH-PLAN. check/full model-domain-persistence-deployment tests/prepare pass. Actual1280px/320px browser checks show loaded local Inter and no page overflow,≥44px visible controls. Search no-results/recovery, native editor focus/prefill and Escape cancellation pass; Photo Album next/close viewer passes. Final screenshots inspected after spacing/header fixes. Site SHA256 and browser results saved. Reduced-motion rules retained; OS emulation/physical devices/screen readers untested. No user source migrations or new production guarantees. Publication next.
++
++## DESIGN-VARIETY-PLAN — 2026-11-06T00:24:14.307Z
++Actor: Codex. User requests coverage across all available designs rather than all-Midnight. Plan: use scoped app mapping in docs/design-source.json, selected complete theme/mode and corresponding licensed local fonts. Preserve format1 records, editor/save/recovery semantics and existing app layout. Update design documentation/provenance, run checks/tests/prepare, inspect desktop/mobile/control tasks and publish exact matching screenshot/repo. No additional access guarantees or user-record migration. Pending.
++
++## DESIGN-VARIETY-APPLIED — 2026-11-06T00:24:59.552Z
++Actor: Codex; reference DESIGN-VARIETY-PLAN. Selected complete Midnight/dark theme, fonts and type/shape/spacing roles from dec4b08d12b98261bb6b52d9bfeb07c876b8f89d. Independent theme bytes unchanged; no domain/app behavior/source record changes. Design documentation/provenance updated. Browser/check verification pending.
++
++## DESIGN-VARIETY-VERIFIED — 2026-11-06T00:27:44.788Z
++Actor: Codex; reference DESIGN-VARIETY-PLAN. midnight/dark renders full selected typography/colors/geometry with local fonts. check/full model-domain-persistence-deployment tests/prepare pass. Desktop1280/mobile320 no page overflow; native search empty/recovery and editor focus/Escape pass. Screenshots inspected, source hashes/results saved. No app behavior or source record changes. Device motion rules retained; OS emulation/physical devices/screen readers untested. Publication next.
+diff --git a/audit/design-variety-checks.json b/audit/design-variety-checks.json
+new file mode 100644
+index 0000000..773c704
+--- /dev/null
++++ b/audit/design-variety-checks.json
+@@ -0,0 +1,56 @@
++{
++  "utc": "2026-11-06T00:27:44.764Z",
++  "app": "portfolio",
++  "design": "midnight",
++  "mode": "dark",
++  "desktop": {
++    "app": "portfolio",
++    "background": "rgb(16, 13, 23)",
++    "bodyFamily": "Inter, system-ui, -apple-system, \"Segoe UI\", Arial, sans-serif",
++    "bodyFontReady": true,
++    "cardRadius": "8px",
++    "design": "midnight",
++    "headingFamily": "Inter, system-ui, -apple-system, \"Segoe UI\", Arial, sans-serif",
++    "headingFontReady": true,
++    "mode": "dark",
++    "overflow": false
++  },
++  "mobile": {
++    "app": "portfolio",
++    "headerActionHeight": 46,
++    "overflow": false,
++    "width": 320
++  },
++  "tasks": {
++    "app": "portfolio",
++    "empty": "0 projects",
++    "dialogFocus": true,
++    "escapeCloses": true
++  },
++  "checks": [
++    {
++      "args": [
++        "scripts/check.mjs"
++      ],
++      "status": 0
++    },
++    {
++      "args": [
++        "--test",
++        "tests/model.test.mjs",
++        "tests/domain.test.mjs",
++        "tests/persistence.test.mjs",
++        "tests/deployment.test.mjs"
++      ],
++      "status": 0
++    },
++    {
++      "args": [
++        "scripts/deploy.mjs",
++        "--prepare"
++      ],
++      "status": 0
++    }
++  ],
++  "limits": "Browser local fixture; OS motion emulation/physical device/screen reader and new production permissions not tested."
++}
+diff --git a/audit/design-variety-sha256.json b/audit/design-variety-sha256.json
+new file mode 100644
+index 0000000..a380aa0
+--- /dev/null
++++ b/audit/design-variety-sha256.json
+@@ -0,0 +1,94 @@
++[
++  {
++    "file": "site/app.mjs",
++    "sha256": "ad916532f14d969e90fbd308684bb52b89a2932b3bac131aa53056b68aac2012"
++  },
++  {
++    "file": "site/assets/pagelove-design/app.css",
++    "sha256": "f1466c8f368cacc3a3e7f0c0d5aa3c6744384ba0821600dccdb60f87a84ee7d2"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/firacode-400.ttf",
++    "sha256": "edc273e94e72c8ee4279c8406f65373d96c518e3fea9cc3f121fed51283e0e70"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/firacode-500.ttf",
++    "sha256": "f50a6f8bc4518eb4a3df9c9726f33d37ef73f7bc6f2ac845cf772c350cfe38cb"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/firacode-600.ttf",
++    "sha256": "a4d23253c085549ee11a66a18f77aaa5703ebb44bcb4739c4c53c3f26040d863"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/firacode-OFL.txt",
++    "sha256": "659316f4897367d11f1f6af35fe07b653b4d7c7f1187cbec4dd0a39aa12fbdfb"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/inter-400.ttf",
++    "sha256": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/inter-500.ttf",
++    "sha256": "8c883f63b2c4157d997319f2c8bc6995ed4357ef371940d31ca159004a4aae63"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/inter-600.ttf",
++    "sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
++  },
++  {
++    "file": "site/assets/pagelove-design/assets/fonts/inter-OFL.txt",
++    "sha256": "78c5db5075157265b6c50efe8532587adfc6f5f2ea7bae40acfa067e2e684a7c"
++  },
++  {
++    "file": "site/assets/pagelove-design/base.css",
++    "sha256": "0f38ac245b5d2a24008b2fe572c1936598d82dd4931d2943ce341db0db515008"
++  },
++  {
++    "file": "site/assets/pagelove-design/DESIGN.md",
++    "sha256": "685c24f9ba02b26f9aabc06e1ba2d44d34ae9827f310e9add1bb1befa7fcfa5d"
++  },
++  {
++    "file": "site/assets/pagelove-design/fonts.css",
++    "sha256": "a7ee79beec2a8b8476cc8250d470fd7189e02ff172e5c901b45721ffa7175f85"
++  },
++  {
++    "file": "site/assets/pagelove-design/library-components.css",
++    "sha256": "7acd3bc452b690e288145c8eb885379237e2401f04542a8b3e7f76cee46f133b"
++  },
++  {
++    "file": "site/assets/pagelove-design/LICENSE",
++    "sha256": "25768f0f5a730893110ab62e341ecb3f1b7171251a8695027c28bcb8c6223ff1"
++  },
++  {
++    "file": "site/assets/pagelove-design/NOTICE.md",
++    "sha256": "64c68a9d4ad430d7a3291b37b5e405e6436cb20d53acf6972643269ddde75cea"
++  },
++  {
++    "file": "site/assets/pagelove-design/theme.css",
++    "sha256": "d5a843bcec746058786ffdecef3e24cc1e75ec5f9b8a1e6b65781193b8742f5c"
++  },
++  {
++    "file": "site/config.mjs",
++    "sha256": "86b1fd0299f3884cee591aa2cceb0925c6bbfe7771c84ec9b25e020534c8fa68"
++  },
++  {
++    "file": "site/domain.mjs",
++    "sha256": "0ebd2960ce8dc40dfafeb0b87796fdc90d757e20b4ec62595965a5e3578ce5f7"
++  },
++  {
++    "file": "site/index.html",
++    "sha256": "0ed59025b5ee6326cacc6abc9427327c82ee9a8f98b992fa0c6a06adbacf9dca"
++  },
++  {
++    "file": "site/model.mjs",
++    "sha256": "a1c33031e9fd32fb8988ec726a493a5e170e80c6c203274b868679642784e469"
++  },
++  {
++    "file": "site/records/content.html",
++    "sha256": "b6de6d12cca65fd4f71bf03be1d3692f67288c450281910126f672b25f2c464e"
++  },
++  {
++    "file": "site/styles.css",
++    "sha256": "ed391e035cf8adb19d314670ffd22db37b04f7d1b416a81033bd4c7570db66ef"
++  }
++]
+diff --git a/audit/screenshots/variety-desktop.jpg b/audit/screenshots/variety-desktop.jpg
+new file mode 100644
+index 0000000..1dd13ea
+Binary files /dev/null and b/audit/screenshots/variety-desktop.jpg differ
+diff --git a/audit/screenshots/variety-mobile.jpg b/audit/screenshots/variety-mobile.jpg
+new file mode 100644
+index 0000000..d4eb981
+Binary files /dev/null and b/audit/screenshots/variety-mobile.jpg differ
+diff --git a/docs/design-source.json b/docs/design-source.json
+index a026bed..9fcb8b7 100644
+--- a/docs/design-source.json
++++ b/docs/design-source.json
+@@ -3,33 +3,13 @@
+   "revision": "dec4b08d12b98261bb6b52d9bfeb07c876b8f89d",
+   "design": "midnight",
+   "mode": "dark",
+-  "integration": "Independent theme, shared components/base; Inter-only font subset, licensed upstream files unchanged.",
++  "integration": "Complete independent selected theme plus shared base/components; local selected heading/body/code font families.",
+   "files": [
+-    {
+-      "source": "styles/library-components.css",
+-      "file": "library-components.css",
+-      "sha256": "7acd3bc452b690e288145c8eb885379237e2401f04542a8b3e7f76cee46f133b"
+-    },
+-    {
+-      "source": "styles/base.css",
+-      "file": "base.css",
+-      "sha256": "0f38ac245b5d2a24008b2fe572c1936598d82dd4931d2943ce341db0db515008"
+-    },
+     {
+       "source": "designs/midnight/styles/theme.css",
+       "file": "theme.css",
+       "sha256": "d5a843bcec746058786ffdecef3e24cc1e75ec5f9b8a1e6b65781193b8742f5c"
+     },
+-    {
+-      "source": "LICENSE",
+-      "file": "LICENSE",
+-      "sha256": "25768f0f5a730893110ab62e341ecb3f1b7171251a8695027c28bcb8c6223ff1"
+-    },
+-    {
+-      "source": "NOTICE.md",
+-      "file": "NOTICE.md",
+-      "sha256": "64c68a9d4ad430d7a3291b37b5e405e6436cb20d53acf6972643269ddde75cea"
+-    },
+     {
+       "source": "designs/midnight/DESIGN.md",
+       "file": "DESIGN.md",
+@@ -51,9 +31,19 @@
+       "sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
+     },
+     {
+-      "source": "assets/fonts/inter-OFL.txt",
+-      "file": "assets/fonts/inter-OFL.txt",
+-      "sha256": "78c5db5075157265b6c50efe8532587adfc6f5f2ea7bae40acfa067e2e684a7c"
++      "source": "assets/fonts/firacode-400.ttf",
++      "file": "assets/fonts/firacode-400.ttf",
++      "sha256": "edc273e94e72c8ee4279c8406f65373d96c518e3fea9cc3f121fed51283e0e70"
++    },
++    {
++      "source": "assets/fonts/firacode-500.ttf",
++      "file": "assets/fonts/firacode-500.ttf",
++      "sha256": "f50a6f8bc4518eb4a3df9c9726f33d37ef73f7bc6f2ac845cf772c350cfe38cb"
++    },
++    {
++      "source": "assets/fonts/firacode-600.ttf",
++      "file": "assets/fonts/firacode-600.ttf",
++      "sha256": "a4d23253c085549ee11a66a18f77aaa5703ebb44bcb4739c4c53c3f26040d863"
+     }
+   ]
+ }
+diff --git a/site/assets/pagelove-design/assets/fonts/firacode-400.ttf b/site/assets/pagelove-design/assets/fonts/firacode-400.ttf
+new file mode 100644
+index 0000000..8ff1c40
+Binary files /dev/null and b/site/assets/pagelove-design/assets/fonts/firacode-400.ttf differ
+diff --git a/site/assets/pagelove-design/assets/fonts/firacode-500.ttf b/site/assets/pagelove-design/assets/fonts/firacode-500.ttf
+new file mode 100644
+index 0000000..8ba160b
+Binary files /dev/null and b/site/assets/pagelove-design/assets/fonts/firacode-500.ttf differ
+diff --git a/site/assets/pagelove-design/assets/fonts/firacode-600.ttf b/site/assets/pagelove-design/assets/fonts/firacode-600.ttf
+new file mode 100644
+index 0000000..d26efda
+Binary files /dev/null and b/site/assets/pagelove-design/assets/fonts/firacode-600.ttf differ
+diff --git a/site/assets/pagelove-design/assets/fonts/firacode-OFL.txt b/site/assets/pagelove-design/assets/fonts/firacode-OFL.txt
+new file mode 100644
+index 0000000..e6c7285
+--- /dev/null
++++ b/site/assets/pagelove-design/assets/fonts/firacode-OFL.txt
+@@ -0,0 +1,93 @@
++Copyright 2014-2020 The Fira Code Project Authors
++
++This Font Software is licensed under the SIL Open Font License, Version 1.1.
++This license is copied below, and is also available with a FAQ at:
++https://scripts.sil.org/OFL
++
++
++-----------------------------------------------------------
++SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
++-----------------------------------------------------------
++
++PREAMBLE
++The goals of the Open Font License (OFL) are to stimulate worldwide
++development of collaborative font projects, to support the font creation
++efforts of academic and linguistic communities, and to provide a free and
++open framework in which fonts may be shared and improved in partnership
++with others.
++
++The OFL allows the licensed fonts to be used, studied, modified and
++redistributed freely as long as they are not sold by themselves. The
++fonts, including any derivative works, can be bundled, embedded,
++redistributed and/or sold with any software provided that any reserved
++names are not used by derivative works. The fonts and derivatives,
++however, cannot be released under any other type of license. The
++requirement for fonts to remain under this license does not apply
++to any document created using the fonts or their derivatives.
++
++DEFINITIONS
++"Font Software" refers to the set of files released by the Copyright
++Holder(s) under this license and clearly marked as such. This may
++include source files, build scripts and documentation.
++
++"Reserved Font Name" refers to any names specified as such after the
++copyright statement(s).
++
++"Original Version" refers to the collection of Font Software components as
++distributed by the Copyright Holder(s).
++
++"Modified Version" refers to any derivative made by adding to, deleting,
++or substituting -- in part or in whole -- any of the components of the
++Original Version, by changing formats or by porting the Font Software to a
++new environment.
++
++"Author" refers to any designer, engineer, programmer, technical
++writer or other person who contributed to the Font Software.
++
++PERMISSION & CONDITIONS
++Permission is hereby granted, free of charge, to any person obtaining
++a copy of the Font Software, to use, study, copy, merge, embed, modify,
++redistribute, and sell modified and unmodified copies of the Font
++Software, subject to the following conditions:
++
++1) Neither the Font Software nor any of its individual components,
++in Original or Modified Versions, may be sold by itself.
++
++2) Original or Modified Versions of the Font Software may be bundled,
++redistributed and/or sold with any software, provided that each copy
++contains the above copyright notice and this license. These can be
++included either as stand-alone text files, human-readable headers or
++in the appropriate machine-readable metadata fields within text or
++binary files as long as those fields can be easily viewed by the user.
++
++3) No Modified Version of the Font Software may use the Reserved Font
++Name(s) unless explicit written permission is granted by the corresponding
++Copyright Holder. This restriction only applies to the primary font name as
++presented to the users.
++
++4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
++Software shall not be used to promote, endorse or advertise any
++Modified Version, except to acknowledge the contribution(s) of the
++Copyright Holder(s) and the Author(s) or with their explicit written
++permission.
++
++5) The Font Software, modified or unmodified, in part or in whole,
++must be distributed entirely under this license, and must not be
++distributed under any other license. The requirement for fonts to
++remain under this license does not apply to any document created
++using the Font Software.
++
++TERMINATION
++This license becomes null and void if any of the above conditions are
++not met.
++
++DISCLAIMER
++THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
++EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
++MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
++OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
++COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
++INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
++DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
++FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
++OTHER DEALINGS IN THE FONT SOFTWARE.
+diff --git a/site/assets/pagelove-design/fonts.css b/site/assets/pagelove-design/fonts.css
+index 9d01696..1ef8276 100644
+--- a/site/assets/pagelove-design/fonts.css
++++ b/site/assets/pagelove-design/fonts.css
+@@ -1,3 +1,6 @@
+ @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/inter-400.ttf') format('truetype')}
+ @font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('./assets/fonts/inter-500.ttf') format('truetype')}
+ @font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('./assets/fonts/inter-600.ttf') format('truetype')}
++@font-face{font-family:'Fira Code';font-style:normal;font-weight:400;font-display:swap;src:url('./assets/fonts/firacode-400.ttf') format('truetype')}
++@font-face{font-family:'Fira Code';font-style:normal;font-weight:500;font-display:swap;src:url('./assets/fonts/firacode-500.ttf') format('truetype')}
++@font-face{font-family:'Fira Code';font-style:normal;font-weight:600;font-display:swap;src:url('./assets/fonts/firacode-600.ttf') format('truetype')}

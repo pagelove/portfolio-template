@@ -1,9 +1,11 @@
-# Alex Morgan
+# portfolio — Midnight
 
-Foundation: pagelove/design-system @ dec4b08d12b98261bb6b52d9bfeb07c876b8f89d. Selected design: Midnight / dark, the catalog default. Read the vendored design guide and provenance in docs/design-source.json. The independent theme is copied unchanged from upstream; do not edit generated values. Shared component/base CSS plus licensed local Inter fonts supply controls and typography. Midnight has no light mode.
+Selected: **Midnight / dark** from pagelove/design-system @ dec4b08d12b98261bb6b52d9bfeb07c876b8f89d. This assignment is part of the nine-app comparison covering all five designs and all eight available design/mode combinations. Use the complete selected design, never a palette mixed with Midnight.
 
-Use plum page/panel/inset surfaces, semantic lavender actions, 44px targets, exported spacing, compact geometry and sans-serif headings. App-specific layout is site/styles.css: publishing pages use clear open introductions and service/project/article compositions; personal tools use compact task/report collections. Keep neutral borders, no decorative northeast arrows or accent card rails. Preserve document-first domain/persistence and draft/conflict contracts from docs/architecture.md. Images are documented sample reference artwork, never claims of client work.
+Start in dark mode. Use deep plum surfaces, pale lavender interaction accents, sans-serif headings and compact geometry. This design has no light mode; do not generate one by inversion. Use the bundled local fonts and product compositions. Separate page, panel and inset surfaces; keep metadata quiet but readable. Use the exported page/panel/row spacing and title scale consistently, with 44px action targets and brief 160ms interaction feedback. See docs/polish.md for the complete product contract.
 
-Verification: check/test/prepare and responsive/browser tasks pending for this revision.
+Canonical selected theme and its guide are vendored unchanged under site/assets/pagelove-design/. Component/base CSS remains shared; local licensed heading/body/code fonts are included. docs/design-source.json records exact source hashes. App-specific semantic layout remains site/styles.css, using design geometry/spacing/type roles. Preserve neutral borders,44px controls, visible focus, reduced-motion rules and no decorative northeast arrows.
 
-Verified: check, full model/domain/persistence/deployment tests and prepare pass. Browser desktop1280px/mobile320px layout, local Inter font loading, search empty/recovery, editor prefill/focus and Escape cancellation pass. See audit/design-refresh-checks.json. Physical-device/screen-reader and OS motion emulation not exercised; inherited reduced-motion rules retained.
+Domain format1/HTML authority, typed settings, recovery/concurrency and save/access limitations remain in docs/architecture.md. This design change does not migrate user records. Verification pending for this revision.
+
+Verified: full check/test/prepare pass;1280px and320px browser layouts, actual selected heading/body fonts, source theme geometry/colors, search no-results/recovery, editor focus and Escape cancellation pass. See audit/design-variety-checks.json. Existing persistence/access limitations remain; no live private-data deployment.

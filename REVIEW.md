@@ -27,3 +27,6 @@ PASS: repository check, full tests and prepared-site credential scan; eleven add
 
 ## Midnight design refresh
 Adopted pagelove/design-system dec4b08 Midnight/dark. Browser screenshots and checks are in audit/. The redesign preserves format1 and existing persistence/access limitations. Existing deployed records remain preserved. Local check/tests/prepare and desktop/mobile/editor/search tasks pass; physical-device/screen-reader and OS motion emulation remain outside this review.
+
+## Design collection coverage
+Current assigned design/mode is recorded in DESIGN.md and docs/design-source.json. This supersedes the historical all-Midnight selection above. Local check/test/prepare and desktop/mobile/search/editor checks pass; see audit/design-variety-checks.json and audit/screenshots/variety-*.jpg. No records/persistence/access contract changes.
