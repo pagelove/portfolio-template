@@ -1,0 +1,78 @@
+[
+  {
+    "file": "site/app.mjs",
+    "sha256": "ad916532f14d969e90fbd308684bb52b89a2932b3bac131aa53056b68aac2012"
+  },
+  {
+    "file": "site/assets/pagelove-design/app.css",
+    "sha256": "f1466c8f368cacc3a3e7f0c0d5aa3c6744384ba0821600dccdb60f87a84ee7d2"
+  },
+  {
+    "file": "site/assets/pagelove-design/assets/fonts/inter-400.ttf",
+    "sha256": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba"
+  },
+  {
+    "file": "site/assets/pagelove-design/assets/fonts/inter-500.ttf",
+    "sha256": "8c883f63b2c4157d997319f2c8bc6995ed4357ef371940d31ca159004a4aae63"
+  },
+  {
+    "file": "site/assets/pagelove-design/assets/fonts/inter-600.ttf",
+    "sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
+  },
+  {
+    "file": "site/assets/pagelove-design/assets/fonts/inter-OFL.txt",
+    "sha256": "78c5db5075157265b6c50efe8532587adfc6f5f2ea7bae40acfa067e2e684a7c"
+  },
+  {
+    "file": "site/assets/pagelove-design/base.css",
+    "sha256": "0f38ac245b5d2a24008b2fe572c1936598d82dd4931d2943ce341db0db515008"
+  },
+  {
+    "file": "site/assets/pagelove-design/DESIGN.md",
+    "sha256": "685c24f9ba02b26f9aabc06e1ba2d44d34ae9827f310e9add1bb1befa7fcfa5d"
+  },
+  {
+    "file": "site/assets/pagelove-design/fonts.css",
+    "sha256": "00dcf56b0c0e16a84bf0061e65be01c888fb24311c5cb92409685040c3955ac8"
+  },
+  {
+    "file": "site/assets/pagelove-design/library-components.css",
+    "sha256": "7acd3bc452b690e288145c8eb885379237e2401f04542a8b3e7f76cee46f133b"
+  },
+  {
+    "file": "site/assets/pagelove-design/LICENSE",
+    "sha256": "25768f0f5a730893110ab62e341ecb3f1b7171251a8695027c28bcb8c6223ff1"
+  },
+  {
+    "file": "site/assets/pagelove-design/NOTICE.md",
+    "sha256": "64c68a9d4ad430d7a3291b37b5e405e6436cb20d53acf6972643269ddde75cea"
+  },
+  {
+    "file": "site/assets/pagelove-design/theme.css",
+    "sha256": "d5a843bcec746058786ffdecef3e24cc1e75ec5f9b8a1e6b65781193b8742f5c"
+  },
+  {
+    "file": "site/config.mjs",
+    "sha256": "86b1fd0299f3884cee591aa2cceb0925c6bbfe7771c84ec9b25e020534c8fa68"
+  },
+  {
+    "file": "site/domain.mjs",
+    "sha256": "0ebd2960ce8dc40dfafeb0b87796fdc90d757e20b4ec62595965a5e3578ce5f7"
+  },
+  {
+    "file": "site/index.html",
+    "sha256": "0ed59025b5ee6326cacc6abc9427327c82ee9a8f98b992fa0c6a06adbacf9dca"
+  },
+  {
+    "file": "site/model.mjs",
+    "sha256": "a1c33031e9fd32fb8988ec726a493a5e170e80c6c203274b868679642784e469"
+  },
+  {
+    "file": "site/records/content.html",
+    "sha256": "b6de6d12cca65fd4f71bf03be1d3692f67288c450281910126f672b25f2c464e"
+  },
+  {
+    "file": "site/styles.css",
+    "sha256": "ed391e035cf8adb19d314670ffd22db37b04f7d1b416a81033bd4c7570db66ef"
+  }
+]

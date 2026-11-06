@@ -1,0 +1,54 @@
+{
+  "utc": "2026-11-06T00:06:09.373Z",
+  "desktop": {
+    "app": "portfolio",
+    "font": true,
+    "heading": "Selected work. Thoughtfully made.",
+    "mode": "dark",
+    "overflow": false
+  },
+  "mobile": {
+    "app": "portfolio",
+    "controlHeight": 46,
+    "overflow": false,
+    "width": 320
+  },
+  "task": {
+    "app": "portfolio",
+    "records": 2,
+    "empty": "0 projects",
+    "dialogState": {
+      "field": "A system for everyday work",
+      "focused": true,
+      "open": true
+    },
+    "escapeCloses": true
+  },
+  "commands": [
+    {
+      "args": [
+        "scripts/check.mjs"
+      ],
+      "status": 0
+    },
+    {
+      "args": [
+        "--test",
+        "tests/model.test.mjs",
+        "tests/domain.test.mjs",
+        "tests/persistence.test.mjs",
+        "tests/deployment.test.mjs"
+      ],
+      "status": 0
+    },
+    {
+      "args": [
+        "scripts/deploy.mjs",
+        "--prepare"
+      ],
+      "status": 0
+    }
+  ],
+  "reducedMotion": "Upstream base.css device/user rules retained; OS emulation not exercised.",
+  "limits": "Local fixture/browser review; no new production authorization/private-data guarantees."
+}

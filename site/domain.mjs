@@ -2,7 +2,7 @@ import {field,money,parseLimits} from './model.mjs';
 const make=(tag,text)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=text;return el;};
 export function createDomain(config,api){
  const toolbar=document.querySelector('.toolbar'),profile=make('div'),report=make('div'),filters=make('div'),settingsButton=make('button','Edit '+(config.private?'preferences':'profile'));
- profile.className='domain-profile';report.className='domain-report';filters.className='domain-filters';settingsButton.type='button';settingsButton.className='pl-button pl-button--outlined pl-button--md domain-settings';
+ profile.className='domain-profile';report.className='domain-report';if(['budget','fitness'].includes(config.id)){report.setAttribute('role','region');report.setAttribute('aria-label',config.id==='budget'?'Budget report, scroll horizontally on small screens':'Activity report, scroll horizontally on small screens');report.tabIndex=0;}filters.className='domain-filters';settingsButton.type='button';settingsButton.className='pl-button pl-button--outlined pl-button--md domain-settings';
  toolbar.before(profile,settingsButton);toolbar.after(filters,report);
  const dialog=make('dialog'),heading=make('h2','Site details'),form=make('form'),error=make('p'),actions=make('div'),cancel=make('button','Cancel'),apply=make('button','Apply details to draft');heading.id='settings-heading';dialog.setAttribute('aria-labelledby',heading.id);dialog.append(heading,form);error.setAttribute('role','alert');actions.className='dialog-actions';
  const controls=new Map();
@@ -24,7 +24,7 @@ export function createDomain(config,api){
   view(row){viewerIndex=photos.findIndex(p=>p.id===row.id);showPhoto(viewerIndex);viewer.showModal();},
   render(root,mode){
    const rows=[...root.children].filter(r=>r.id!=='r-settings');settingsButton.hidden=mode!=='edit';
-   const name=value('name'),headline=value('headline'),about=value('about');if(name)document.querySelector('.brand').textContent=name;if(headline)document.querySelector('.hero h1').textContent=headline;if(about)document.querySelector('.hero>p').textContent=about;
+   const name=value('name'),headline=value('headline'),about=value('about');if(name){const brand=document.querySelector('.brand'),mark=brand.querySelector('.brand-mark');brand.textContent=name;if(mark){mark.textContent=name.split(/\s+/).filter(Boolean).map(w=>Array.from(w)[0]).join('').slice(0,2).toLocaleUpperCase();brand.prepend(mark);}}if(headline)document.querySelector('.hero h1').textContent=headline;if(about)document.querySelector('.hero>p').textContent=about;
    profile.replaceChildren();for(const key of ['contact','hours','skills','author','availability','timezone'])if(value(key)){const p=make('p',key==='contact'?'Contact: '+value(key):value(key));profile.append(p);}
    if(select){const selected=select.value;select.replaceChildren();const all=make('option','All '+(groupKey==='album'?'albums':groupKey==='tags'?'tags':groupKey==='state'?'statuses':'categories'));all.value='';select.append(all);const values=new Set(rows.filter(r=>mode==='edit'||!config.publishing||field(r,'state')==='Published').flatMap(r=>groupKey==='tags'?field(r,groupKey).split(',').map(s=>s.trim()):[field(r,groupKey)]).filter(Boolean));for(const v of [...values].sort()){const option=make('option',v);option.value=v;select.append(option);}select.value=[...values].includes(selected)?selected:'';}
    report.replaceChildren();

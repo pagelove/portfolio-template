@@ -1,34 +1,59 @@
 {
   "repository": "pagelove/design-system",
-  "revision": "0ca2336353647b8d2d726470046617163bbf6d67",
+  "revision": "dec4b08d12b98261bb6b52d9bfeb07c876b8f89d",
+  "design": "midnight",
+  "mode": "dark",
+  "integration": "Independent theme, shared components/base; Inter-only font subset, licensed upstream files unchanged.",
   "files": [
     {
-      "file": "app.css",
-      "sha256": "989013780ce09e560902b9bbb0035730d77901a871159d340a5b83f7fca9bee7"
-    },
-    {
-      "file": "foundations.css",
-      "sha256": "68ada0487fbfe85f40a136e48b8bfb9424c7bd6eb3230438268bbcabf95fa86f"
-    },
-    {
+      "source": "styles/library-components.css",
       "file": "library-components.css",
       "sha256": "7acd3bc452b690e288145c8eb885379237e2401f04542a8b3e7f76cee46f133b"
     },
     {
+      "source": "styles/base.css",
+      "file": "base.css",
+      "sha256": "0f38ac245b5d2a24008b2fe572c1936598d82dd4931d2943ce341db0db515008"
+    },
+    {
+      "source": "designs/midnight/styles/theme.css",
+      "file": "theme.css",
+      "sha256": "d5a843bcec746058786ffdecef3e24cc1e75ec5f9b8a1e6b65781193b8742f5c"
+    },
+    {
+      "source": "LICENSE",
       "file": "LICENSE",
       "sha256": "25768f0f5a730893110ab62e341ecb3f1b7171251a8695027c28bcb8c6223ff1"
     },
     {
-      "file": "profiles.css",
-      "sha256": "e33fc8cffe8b30dbf458f43746febbc3978cbfdac8e425d8896e3bc199596ea0"
+      "source": "NOTICE.md",
+      "file": "NOTICE.md",
+      "sha256": "64c68a9d4ad430d7a3291b37b5e405e6436cb20d53acf6972643269ddde75cea"
     },
     {
-      "file": "semantic.css",
-      "sha256": "ef39a8bb9c014d7fb09744d2b591a3c42cded295917acc17458df9e13167c2cd"
+      "source": "designs/midnight/DESIGN.md",
+      "file": "DESIGN.md",
+      "sha256": "685c24f9ba02b26f9aabc06e1ba2d44d34ae9827f310e9add1bb1befa7fcfa5d"
     },
     {
-      "file": "typography.css",
-      "sha256": "28869ab24e5f32b7c1b782679d5ba2f46c20a8eb7248fb99c10fb7a449e749bf"
+      "source": "assets/fonts/inter-400.ttf",
+      "file": "assets/fonts/inter-400.ttf",
+      "sha256": "1b08e7fc267a5c7e1d614100f604b83e7e8a0be241f0f288faa2b3ac93a683ba"
+    },
+    {
+      "source": "assets/fonts/inter-500.ttf",
+      "file": "assets/fonts/inter-500.ttf",
+      "sha256": "8c883f63b2c4157d997319f2c8bc6995ed4357ef371940d31ca159004a4aae63"
+    },
+    {
+      "source": "assets/fonts/inter-600.ttf",
+      "file": "assets/fonts/inter-600.ttf",
+      "sha256": "e7a1aaf7eda9f2fad4131725fa556265ec75ca7b2d756260173a040363e8d4f7"
+    },
+    {
+      "source": "assets/fonts/inter-OFL.txt",
+      "file": "assets/fonts/inter-OFL.txt",
+      "sha256": "78c5db5075157265b6c50efe8532587adfc6f5f2ea7bae40acfa067e2e684a7c"
     }
   ]
 }
