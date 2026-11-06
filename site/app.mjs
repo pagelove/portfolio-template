@@ -1,8 +1,8 @@
-import {createProduct} from './product.mjs';
+import {createProduct} from './product.mjs?v=product-ready-final-20261106';
 import {civilToday} from './product-logic.mjs';
 import {sourceText} from './source-response.mjs';
 import {createRecovery} from './recovery.mjs';
-import {createDomain} from './domain.mjs';
+import {createDomain} from './domain.mjs?v=product-ready-final-20261106';
 import {config} from './config.mjs';
 import {validate,serialize,field,safeURL,money,parseDocument} from './model.mjs';
 const $=s=>document.querySelector(s), status=$('#status'), list=$('#collection'), dialog=$('#editor'), form=$('#edit-form');
@@ -17,11 +17,12 @@ function remember(){const stored=drafts.write(snapshot());if(!stored)report('Dra
 function edited(){dirty=snapshot()!==baseline;if(!dirty){const cleared=drafts.remove();render();report(cleared?'Changes match the loaded source.':'Changes match the loaded source. An older recovery copy could not be cleared.',!cleared);return;}const stored=remember();render();report(stored?'Unsaved changes. Save to confirm them on the source.':'Unsaved changes. Draft storage unavailable; export your work before leaving.',!stored);}
 function rows(){return [...root.children].filter(r=>r.id!=='r-settings');}
 const domain=createDomain(config,{getRoot:()=>root,replace:candidate=>{validate(candidate,config);root=candidate;edited();},rerender:()=>render(),viewValue:key=>product.viewValue(key)});
-const product=createProduct(config,{getRoot:()=>root,rerender:()=>render(),report,photo:row=>domain.view(row),undo:()=>{if(!lastRemoved||root.querySelector('#'+CSS.escape(lastRemoved.record.id))){report('That record is already present.');return;}const next=lastRemoved.nextId&&root.querySelector('#'+CSS.escape(lastRemoved.nextId));root.insertBefore(lastRemoved.record.cloneNode(true),next||root.querySelector('#r-settings'));lastRemoved=null;edited();}});
+const product=createProduct(config,{getRoot:()=>root,rerender:()=>render(),report,photo:row=>domain.view(row),undo:()=>{if(!lastRemoved||root.querySelector('#'+CSS.escape(lastRemoved.record.id))){report('That record is already present.');return;}const next=lastRemoved.nextId&&root.querySelector('#'+CSS.escape(lastRemoved.nextId));const restoredId=lastRemoved.record.id;root.insertBefore(lastRemoved.record.cloneNode(true),next||root.querySelector('#r-settings'));lastRemoved=null;edited();const restored=document.querySelector('[data-record-id="'+restoredId+'"]');const focus=restored?.querySelector('button:not([disabled]),a[href]')||list;focus.tabIndex=focus===list?-1:focus.tabIndex;focus.focus({preventScroll:true});}});
 function download(text,name,type='text/html'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
 function node(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
 function button(text,fn){const b=node('button',text,'pl-button pl-button--outlined pl-button--md');b.type='button';b.addEventListener('click',fn);return b;}
 function render(){
+ if(!root)return;
  const query=$('#search').value.toLowerCase().trim();list.replaceChildren();
  domain.render(root,mode);
  const visible=product.order(rows().filter(row=>domain.include(row)&&product.include(row)).filter(r=>(mode==='edit'||!config.publishing||field(r,'state')==='Published')&&r.textContent.toLowerCase().includes(query)));
@@ -34,12 +35,12 @@ function render(){
    const value=field(row,f.key);if(!value)continue;const p=node('p',value,['body','description','notes'].includes(f.key)?'record-copy':'record-meta');p.dataset.field=f.key;if(!['body','description','notes','tagline'].includes(f.key))p.prepend(node('strong',f.label+': '));body.append(p);
   }
   if(field(row,'link')){const a=node('a',config.linkLabel||'Open link','pl-button pl-button--strong pl-button--md');a.href=safeURL(field(row,'link'));body.append(a);}
-  if(mode==='edit'){const controls=node('div',undefined,'actions');controls.append(button('Edit',()=>openEditor(row)),button('Move up',()=>move(row,-1)),button('Move down',()=>move(row,1)),button('Remove',()=>{if(confirm('Remove this '+config.noun+' from the working draft? Save to apply the change.')){lastRemoved={record:row.cloneNode(true),nextId:row.nextElementSibling?.id};row.remove();edited();product.removed(field(row,config.titleField));}}));const ordered=rows(),position=ordered.indexOf(row);controls.children[1].disabled=position===0;controls.children[2].disabled=position===ordered.length-1;body.append(controls);}
+  if(mode==='edit'){const controls=node('div',undefined,'actions');controls.append(button('Edit',()=>openEditor(row)),button('Move up',()=>move(row,-1)),button('Move down',()=>move(row,1)),button('Remove',()=>{if(confirm('Remove this '+config.noun+' from the working draft? Save to apply the change.')){lastRemoved={record:row.cloneNode(true),nextId:row.nextElementSibling?.id};row.remove();edited();product.removed(field(row,config.titleField));}}));const ordered=rows(),position=ordered.indexOf(row);controls.children[1].hidden=controls.children[2].hidden=!product.manualOrder();controls.children[1].disabled=position===0;controls.children[2].disabled=position===ordered.length-1;body.append(controls);}
   if(config.id==='photos'&&field(row,'image'))body.append(button('View photo',()=>domain.view(row)));
   card.append(body);product.decorate(card,row);list.append(card);
  }
  if(!visible.length)list.append(node('p',['budget','fitness'].includes(config.id)?'No '+config.plural+' in this view. Change the reporting period or filters, or add a record.':'No matching '+config.plural+'. Clear filters or change the search'+(mode==='edit'?' or add one.':'.')));
- $('#manage').setAttribute('aria-pressed',String(mode==='edit'));$('#manage').textContent=mode==='edit'?'Preview':'Edit content';
+ $('#manage').disabled=false;$('#add').disabled=false;$('#manage').setAttribute('aria-pressed',String(mode==='edit'));$('#manage').textContent=mode==='edit'?'Preview':'Edit content';
  document.querySelectorAll('[data-edit-only]').forEach(e=>e.hidden=mode!=='edit');$('#save').disabled=!dirty||busy||!acceptedWriter;
 }
 function move(row,direction){const ordered=rows(),other=ordered[ordered.indexOf(row)+direction];if(!other)return;direction<0?root.insertBefore(row,other):root.insertBefore(other,row);edited();}
@@ -82,4 +83,4 @@ $('#download-draft').addEventListener('click',()=>download(drafts.read().value||
 window.addEventListener('beforeunload',e=>{if(dirty){remember();e.preventDefault();e.returnValue='';}});
 window.addEventListener('pagehide',()=>{if(dirty)remember();});
 async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin',headers:{Range:'selector=#records'}});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await sourceText(response));etag=response.headers.get('ETag');baseline=snapshot();const recovery=drafts.read();$('#recovery').hidden=!recovery.value;mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');if(!recovery.ok)report('Source loaded. Draft storage unavailable; export changes before leaving.',true);}catch(error){report(error.message,true);$('#manage').disabled=true;}}
-init();
+$('#manage').disabled=true;$('#add').disabled=true;init();

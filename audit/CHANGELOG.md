@@ -91,3 +91,9 @@ Implemented the scoped portfolio batch from central FINDINGS.md: app-specific ta
 
 ## PRODUCT-READINESS-VERIFIED — 2026-11-06T13:49:53.993Z — Codex
 User request fulfilled within scoped product task pass; see central product-readiness FINDINGS.md. Verification: affected source checks and behavioral suites passed, including all9template period/order/export helpers, CRM/invoice state tests, and garden/circuit/world finder filters; desktop/narrow-screen browser task checks and real CSV download recorded. Source records/write/trust boundaries retained; browser fixtures do not establish hosted privacy/validation or native writes. Affected files are the complete reviewed diff and SHA256 inventory, linked by this commit. Public review deployment and final acceptance tracked centrally; ATS remains local-only as previously directed.
+
+## PRODUCT-READINESS-INTERACTION-PLAN — 2026-11-06T14:12:35.819Z — Codex
+Final scoped new-interaction corrections: Undo restores focus to its record; manual reorder is offered only for a complete Original-order collection. Files: site/app.mjs and product.mjs; no source/model changes. Verification pending.
+
+## PRODUCT-READINESS-INTERACTION-VERIFIED — 2026-11-06T14:26:18.431Z — Codex
+Completed focus restoration, scoped manual ordering and safe controls before source loading. Query-versioned module dependencies prevent stale helpers after publication. Checks: all 34 behavioral tests and complete source/deploy checks passed; public conditional deployment/readback recorded centrally. Files: app.mjs, product.mjs, domain.mjs, index.html. No data or trust-boundary changes.
