@@ -39,3 +39,7 @@ Pagelove native authentication has not been shown to fail. A401 on an applicatio
 ## Slide 4 build and deploy
 
 Use the repository URL, site hostname and private API token supplied in the generated prompt. After adapting and checking the app, run `node scripts/deploy.mjs --prepare`, then `node scripts/deploy.mjs --host YOUR-SITE.onpagelove.com`. The token is entered privately; existing records are retained. See [deployment instructions](docs/deployment.md) for verify/update commands, isolated paths and exact guarantees. No console-session handoff is required for trusted authoring deployment. Published browser code never contains the owner token.
+
+## Document-first development review
+
+Read [the edition2.4 project record](DOCUMENT-FIRST-REVIEW.md) for source authority, operation/recovery contracts, justified runtime exceptions and current acceptance limits. Plans and verification are recorded in audit/CHANGELOG.md. Local tests do not establish live privacy, authorization or physical-device acceptance.

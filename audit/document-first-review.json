@@ -1,0 +1,72 @@
+{
+  "utc": "2026-11-06T02:45:58.259Z",
+  "actor": "Codex",
+  "guideEdition": "2.4",
+  "sourceBase": "0d6363dee3c15305dcd79b3eecacbc0e72dd31dc",
+  "checks": [
+    {
+      "name": "check",
+      "code": 0
+    },
+    {
+      "name": "test",
+      "code": 0
+    },
+    {
+      "name": "prepare",
+      "code": 0
+    }
+  ],
+  "browser": "PASS: denied-storage source load/edit/apply/verified local save in browser; download-completion event unavailable, current HTML export serialization passes.",
+  "limits": [
+    "No new live private data or host policy acceptance claimed.",
+    "Physical device and assistive-technology checks remain separate."
+  ],
+  "files": [
+    {
+      "file": "DOCUMENT-FIRST-REVIEW.md",
+      "sha256": "0b20446063e17aa1702e734e70c1519e3a2565af7d93ad45b1cb7b54c930eaf9",
+      "bytes": 3630
+    },
+    {
+      "file": "site/recovery.mjs",
+      "sha256": "8d248d67ea698f0a63b1a15b63303c01d13b7f862f04b2c0e4f18b96b220a4dd",
+      "bytes": 399
+    },
+    {
+      "file": "tests/document-first.test.mjs",
+      "sha256": "d2f64b3b4055242c566bdd3702defc4d9f770b2f9709eeea4d7a3d50cb2e6f0b",
+      "bytes": 1640
+    },
+    {
+      "file": "README.md",
+      "sha256": "8cac7a430adf950ef63384660dfd26061e9553f7c4b586b082840e12016d8f98",
+      "bytes": 4421
+    },
+    {
+      "file": "docs/architecture.md",
+      "sha256": "ddcfeda296fa8206b1b6896c60ef3d7560d83fd877dd4b8f29aa08a96c4d4e89",
+      "bytes": 4190
+    },
+    {
+      "file": "scripts/check.mjs",
+      "sha256": "3df695790218d54da8db78731eefea3f74f6c44757afc86b6f4fc7c9c6f3136f",
+      "bytes": 1774
+    },
+    {
+      "file": "scripts/preview.mjs",
+      "sha256": "1c86e4184326cfef194630fba6f71b636790bb31fed468123fe7d40871724e4d",
+      "bytes": 2827
+    },
+    {
+      "file": "site/app.mjs",
+      "sha256": "98eb2e9bc58a016c28a0192767af46bbce4f5eab5b687d56f0cf92dc14f5dea1",
+      "bytes": 11977
+    },
+    {
+      "file": "site/model.mjs",
+      "sha256": "8039049938f9c37587dc534108e5e3540443bedcea86a83cf20d1520395035cd",
+      "bytes": 5822
+    }
+  ]
+}

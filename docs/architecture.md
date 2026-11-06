@@ -15,3 +15,8 @@ Operations: GET aggregate; local create/update/delete/reorder/import; conditiona
 ## Typed site settings
 
 Optional stable article#r-settings, itemtype Settings:1, shares the same aggregate revision. Its field contract is config.settings. Legacy format1 aggregates without it are accepted; the explicit settings form creates it from visible defaults only when applied. Unknown/duplicate settings reject. Identity/profile, reporting periods/goals and availability are domain content in HTML, never a parallel editable configuration store. Controls render from config contracts; applied values serialize from form properties. Transfer transactions are excluded from budget income/expense totals; category limits use one unique category|USD amount per line. Weekly fitness reports use Monday–Sunday civil dates in the chosen calendar timezone; date records have no inferred clock time. Publication states remain a view filter pending protected-source deployment.
+
+## Edition2.4 review hardening
+Complete format1 imports/fixture writes require one records aggregate as the sole body element; ambiguous roots, unrelated body content and duplicate DOM identities are rejected before replacement. Current source and HTML export remain usable when session recovery storage is blocked or full. A verified save remains verified even if clearing the old local recovery copy fails; the interface reports that limitation. Recovery contains HTML snapshots only and never becomes a competing model. See tests/document-first.test.mjs and audit/CHANGELOG.md for current evidence.
+
+The current edition2.4 scope and maintenance acceptance record is DOCUMENT-FIRST-REVIEW.md at repository root. It distinguishes local passes from live/privacy/device gates.

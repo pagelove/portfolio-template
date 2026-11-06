@@ -1,5 +1,5 @@
-import fs from 'node:fs/promises';import path from 'node:path';import {DOMParser} from 'linkedom';import {validate} from '../site/model.mjs';import {config} from '../site/config.mjs';
-validate(new DOMParser().parseFromString(await fs.readFile('site/records/content.html','utf8'),'text/html').querySelector('#records'),config);
+import fs from 'node:fs/promises';import path from 'node:path';import {DOMParser} from 'linkedom';import {validate,parseDocument} from '../site/model.mjs';import {config} from '../site/config.mjs';
+parseDocument(await fs.readFile('site/records/content.html','utf8'),config,DOMParser);
 const html=new DOMParser().parseFromString(await fs.readFile('site/index.html','utf8'),'text/html');
 const ids=[...html.querySelectorAll('[id]')].map(e=>e.id);if(new Set(ids).size!==ids.length)throw Error('Duplicate interface IDs');
 for(const label of html.querySelectorAll('label[for]'))if(!ids.includes(label.getAttribute('for')))throw Error('Broken label');

@@ -1,15 +1,17 @@
+import {createRecovery} from './recovery.mjs';
 import {createDomain} from './domain.mjs';
 import {config} from './config.mjs';
-import {validate,serialize,field,safeURL,money} from './model.mjs';
+import {validate,serialize,field,safeURL,money,parseDocument} from './model.mjs';
 const $=s=>document.querySelector(s), status=$('#status'), list=$('#collection'), dialog=$('#editor'), form=$('#edit-form');
 const acceptedWriter=location.hostname==='127.0.0.1';
 let root,etag,baseline='',editingId=null,busy=false,dirty=false,mode='published';
 const draftKey='pagelove-draft:'+config.id+':'+location.origin+location.pathname;
 const report=(message,error=false)=>{status.textContent=message;status.dataset.error=String(error);};
-function parse(text){const doc=new DOMParser().parseFromString(text,'text/html');return validate(doc.querySelector('#records'),config);}
+const drafts=createRecovery(()=>sessionStorage,draftKey);
+function parse(text){return parseDocument(text,config);}
 function snapshot(){return serialize(root,config);}
-function remember(){try{sessionStorage.setItem(draftKey,snapshot());}catch{report('Draft storage unavailable. Export your work before leaving.',true);}}
-function edited(){dirty=true;remember();render();report('Unsaved changes. Save to confirm them on the source.');}
+function remember(){const stored=drafts.write(snapshot());if(!stored)report('Draft storage unavailable. Export your work before leaving.',true);return stored;}
+function edited(){dirty=true;const stored=remember();render();report(stored?'Unsaved changes. Save to confirm them on the source.':'Unsaved changes. Draft storage unavailable; export your work before leaving.',!stored);}
 function rows(){return [...root.children].filter(r=>r.id!=='r-settings');}
 const domain=createDomain(config,{getRoot:()=>root,replace:candidate=>{validate(candidate,config);root=candidate;edited();},rerender:()=>render()});
 function download(text,name,type='text/html'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
@@ -71,13 +73,13 @@ $('#save').addEventListener('click',async()=>{
   const readback=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!readback.ok)throw Error('Saved response received, but readback is unavailable. Retain your draft and reload to reconcile.');
   const accepted=parse(await readback.text());if(serialize(accepted,config)!==submitted)throw Error('The current source differs from the submitted snapshot. Export the draft and reconcile.');
   etag=readback.headers.get('ETag');baseline=submitted;
-  if(snapshot()===submitted){root=accepted;dirty=false;sessionStorage.removeItem(draftKey);report('Saved and verified on the source.');}else{report('Earlier snapshot saved. Newer edits remain unsaved.');remember();}
+  if(snapshot()===submitted){root=accepted;dirty=false;const cleared=drafts.remove();report(cleared?'Saved and verified on the source.':'Saved and verified on the source. Older local recovery could not be cleared; export before leaving.',!cleared);}else{report('Earlier snapshot saved. Newer edits remain unsaved.');remember();}
  }catch(error){remember();report(error.message+' No automatic retry was performed.',true);}finally{busy=false;render();}
 });
-$('#reload').addEventListener('click',()=>{if(!dirty||confirm('Reload the current source? Export your draft first if you need to keep it.')){sessionStorage.removeItem(draftKey);location.reload();}});
-$('#recover').addEventListener('click',()=>{try{const saved=sessionStorage.getItem(draftKey);if(!saved)return;root=parse(saved);dirty=true;mode='edit';$('#recovery').hidden=true;render();report('Recovered local draft. Save still requires source acceptance.');}catch(error){report(error.message,true);}});
-$('#download-draft').addEventListener('click',()=>download(sessionStorage.getItem(draftKey)||snapshot(),config.id+'-draft.html'));
+$('#reload').addEventListener('click',()=>{if(!dirty||confirm('Reload the current source? Export your draft first if you need to keep it.')){if(!drafts.remove()){report('Local recovery could not be cleared. Export your work before reloading.',true);return;}location.reload();}});
+$('#recover').addEventListener('click',()=>{try{const recovery=drafts.read();if(!recovery.ok)throw Error('Draft storage unavailable. Current source remains usable.');const saved=recovery.value;if(!saved)return;root=parse(saved);dirty=true;mode='edit';$('#recovery').hidden=true;render();report('Recovered local draft. Save still requires source acceptance.');}catch(error){report(error.message,true);}});
+$('#download-draft').addEventListener('click',()=>download(drafts.read().value||snapshot(),config.id+'-draft.html'));
 window.addEventListener('beforeunload',e=>{if(dirty){remember();e.preventDefault();e.returnValue='';}});
 window.addEventListener('pagehide',()=>{if(dirty)remember();});
-async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await response.text());etag=response.headers.get('ETag');baseline=snapshot();$('#recovery').hidden=!sessionStorage.getItem(draftKey);mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');}catch(error){report(error.message,true);$('#manage').disabled=true;}}
+async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await response.text());etag=response.headers.get('ETag');baseline=snapshot();const recovery=drafts.read();$('#recovery').hidden=!recovery.value;mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');if(!recovery.ok)report('Source loaded. Draft storage unavailable; export changes before leaving.',true);}catch(error){report(error.message,true);$('#manage').disabled=true;}}
 init();

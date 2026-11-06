@@ -1,0 +1,127 @@
+diff --git a/README.md b/README.md
+index 1fb272a..ef58f6d 100644
+--- a/README.md
++++ b/README.md
+@@ -39,3 +39,7 @@ Pagelove native authentication has not been shown to fail. A401 on an applicatio
+ ## Slide 4 build and deploy
+ 
+ Use the repository URL, site hostname and private API token supplied in the generated prompt. After adapting and checking the app, run `node scripts/deploy.mjs --prepare`, then `node scripts/deploy.mjs --host YOUR-SITE.onpagelove.com`. The token is entered privately; existing records are retained. See [deployment instructions](docs/deployment.md) for verify/update commands, isolated paths and exact guarantees. No console-session handoff is required for trusted authoring deployment. Published browser code never contains the owner token.
++
++## Document-first development review
++
++Read [the edition2.4 project record](DOCUMENT-FIRST-REVIEW.md) for source authority, operation/recovery contracts, justified runtime exceptions and current acceptance limits. Plans and verification are recorded in audit/CHANGELOG.md. Local tests do not establish live privacy, authorization or physical-device acceptance.
+diff --git a/docs/architecture.md b/docs/architecture.md
+index f14e9a5..0c9e719 100644
+--- a/docs/architecture.md
++++ b/docs/architecture.md
+@@ -15,3 +15,8 @@ Operations: GET aggregate; local create/update/delete/reorder/import; conditiona
+ ## Typed site settings
+ 
+ Optional stable article#r-settings, itemtype Settings:1, shares the same aggregate revision. Its field contract is config.settings. Legacy format1 aggregates without it are accepted; the explicit settings form creates it from visible defaults only when applied. Unknown/duplicate settings reject. Identity/profile, reporting periods/goals and availability are domain content in HTML, never a parallel editable configuration store. Controls render from config contracts; applied values serialize from form properties. Transfer transactions are excluded from budget income/expense totals; category limits use one unique category|USD amount per line. Weekly fitness reports use Monday–Sunday civil dates in the chosen calendar timezone; date records have no inferred clock time. Publication states remain a view filter pending protected-source deployment.
++
++## Edition2.4 review hardening
++Complete format1 imports/fixture writes require one records aggregate as the sole body element; ambiguous roots, unrelated body content and duplicate DOM identities are rejected before replacement. Current source and HTML export remain usable when session recovery storage is blocked or full. A verified save remains verified even if clearing the old local recovery copy fails; the interface reports that limitation. Recovery contains HTML snapshots only and never becomes a competing model. See tests/document-first.test.mjs and audit/CHANGELOG.md for current evidence.
++
++The current edition2.4 scope and maintenance acceptance record is DOCUMENT-FIRST-REVIEW.md at repository root. It distinguishes local passes from live/privacy/device gates.
+diff --git a/scripts/check.mjs b/scripts/check.mjs
+index 11fce92..fe8cca6 100644
+--- a/scripts/check.mjs
++++ b/scripts/check.mjs
+@@ -1,5 +1,5 @@
+-import fs from 'node:fs/promises';import path from 'node:path';import {DOMParser} from 'linkedom';import {validate} from '../site/model.mjs';import {config} from '../site/config.mjs';
+-validate(new DOMParser().parseFromString(await fs.readFile('site/records/content.html','utf8'),'text/html').querySelector('#records'),config);
++import fs from 'node:fs/promises';import path from 'node:path';import {DOMParser} from 'linkedom';import {validate,parseDocument} from '../site/model.mjs';import {config} from '../site/config.mjs';
++parseDocument(await fs.readFile('site/records/content.html','utf8'),config,DOMParser);
+ const html=new DOMParser().parseFromString(await fs.readFile('site/index.html','utf8'),'text/html');
+ const ids=[...html.querySelectorAll('[id]')].map(e=>e.id);if(new Set(ids).size!==ids.length)throw Error('Duplicate interface IDs');
+ for(const label of html.querySelectorAll('label[for]'))if(!ids.includes(label.getAttribute('for')))throw Error('Broken label');
+diff --git a/scripts/preview.mjs b/scripts/preview.mjs
+index fce42d5..c7717bc 100644
+--- a/scripts/preview.mjs
++++ b/scripts/preview.mjs
+@@ -1,6 +1,6 @@
+ // Loopback-only persistence fixture. This is not a production authentication server.
+ import http from 'node:http';import fs from 'node:fs/promises';import path from 'node:path';import {createHash} from 'node:crypto';import {fileURLToPath} from 'node:url';
+-import {DOMParser} from 'linkedom';import {validate} from '../site/model.mjs';import {config} from '../site/config.mjs';
++import {DOMParser} from 'linkedom';import {validate,parseDocument} from '../site/model.mjs';import {config} from '../site/config.mjs';
+ const root=path.resolve(fileURLToPath(new URL('../site/',import.meta.url))),state=path.resolve(process.env.PREVIEW_STATE||'.preview-state/content.html'),port=Number(process.env.PORT||4174);
+ await fs.mkdir(path.dirname(state),{recursive:true});try{await fs.access(state);}catch{await fs.copyFile(path.join(root,'records/content.html'),state);}
+ const etag=bytes=>'"'+createHash('sha256').update(bytes).digest('hex')+'"';
+@@ -12,7 +12,7 @@ const server=http.createServer(async(req,res)=>{try{
+  if(req.method==='PUT'){
+   if(uri!=='/records/content.html'||req.headers.origin!=='http://'+expected){res.writeHead(403);return res.end('Cross-origin or unsupported write');}
+   let body='';for await(const chunk of req){body+=chunk;if(Buffer.byteLength(body)>2000000){res.writeHead(413);return res.end('Too large');}}
+-  try{validate(new DOMParser().parseFromString(body,'text/html').querySelector('#records'),config);}catch(e){res.writeHead(422);return res.end(e.message);}
++  try{parseDocument(body,config,DOMParser);}catch(e){res.writeHead(422);return res.end(e.message);}
+   const task=async()=>{const old=await fs.readFile(state);if(!req.headers['if-match']){res.writeHead(428);return res.end('Precondition required');}if(req.headers['if-match']!==etag(old)){res.writeHead(412);return res.end('Stale revision');}await fs.writeFile(state+'.pending',body);await fs.rename(state+'.pending',state);res.writeHead(204,{ETag:etag(body)});res.end();};queue=queue.then(task,task);await queue;return;
+  }
+  if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);return res.end('Unsupported method');}
+diff --git a/site/app.mjs b/site/app.mjs
+index f9d129f..3ecb758 100644
+--- a/site/app.mjs
++++ b/site/app.mjs
+@@ -1,15 +1,17 @@
++import {createRecovery} from './recovery.mjs';
+ import {createDomain} from './domain.mjs';
+ import {config} from './config.mjs';
+-import {validate,serialize,field,safeURL,money} from './model.mjs';
++import {validate,serialize,field,safeURL,money,parseDocument} from './model.mjs';
+ const $=s=>document.querySelector(s), status=$('#status'), list=$('#collection'), dialog=$('#editor'), form=$('#edit-form');
+ const acceptedWriter=location.hostname==='127.0.0.1';
+ let root,etag,baseline='',editingId=null,busy=false,dirty=false,mode='published';
+ const draftKey='pagelove-draft:'+config.id+':'+location.origin+location.pathname;
+ const report=(message,error=false)=>{status.textContent=message;status.dataset.error=String(error);};
+-function parse(text){const doc=new DOMParser().parseFromString(text,'text/html');return validate(doc.querySelector('#records'),config);}
++const drafts=createRecovery(()=>sessionStorage,draftKey);
++function parse(text){return parseDocument(text,config);}
+ function snapshot(){return serialize(root,config);}
+-function remember(){try{sessionStorage.setItem(draftKey,snapshot());}catch{report('Draft storage unavailable. Export your work before leaving.',true);}}
+-function edited(){dirty=true;remember();render();report('Unsaved changes. Save to confirm them on the source.');}
++function remember(){const stored=drafts.write(snapshot());if(!stored)report('Draft storage unavailable. Export your work before leaving.',true);return stored;}
++function edited(){dirty=true;const stored=remember();render();report(stored?'Unsaved changes. Save to confirm them on the source.':'Unsaved changes. Draft storage unavailable; export your work before leaving.',!stored);}
+ function rows(){return [...root.children].filter(r=>r.id!=='r-settings');}
+ const domain=createDomain(config,{getRoot:()=>root,replace:candidate=>{validate(candidate,config);root=candidate;edited();},rerender:()=>render()});
+ function download(text,name,type='text/html'){const url=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+@@ -71,13 +73,13 @@ $('#save').addEventListener('click',async()=>{
+   const readback=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!readback.ok)throw Error('Saved response received, but readback is unavailable. Retain your draft and reload to reconcile.');
+   const accepted=parse(await readback.text());if(serialize(accepted,config)!==submitted)throw Error('The current source differs from the submitted snapshot. Export the draft and reconcile.');
+   etag=readback.headers.get('ETag');baseline=submitted;
+-  if(snapshot()===submitted){root=accepted;dirty=false;sessionStorage.removeItem(draftKey);report('Saved and verified on the source.');}else{report('Earlier snapshot saved. Newer edits remain unsaved.');remember();}
++  if(snapshot()===submitted){root=accepted;dirty=false;const cleared=drafts.remove();report(cleared?'Saved and verified on the source.':'Saved and verified on the source. Older local recovery could not be cleared; export before leaving.',!cleared);}else{report('Earlier snapshot saved. Newer edits remain unsaved.');remember();}
+  }catch(error){remember();report(error.message+' No automatic retry was performed.',true);}finally{busy=false;render();}
+ });
+-$('#reload').addEventListener('click',()=>{if(!dirty||confirm('Reload the current source? Export your draft first if you need to keep it.')){sessionStorage.removeItem(draftKey);location.reload();}});
+-$('#recover').addEventListener('click',()=>{try{const saved=sessionStorage.getItem(draftKey);if(!saved)return;root=parse(saved);dirty=true;mode='edit';$('#recovery').hidden=true;render();report('Recovered local draft. Save still requires source acceptance.');}catch(error){report(error.message,true);}});
+-$('#download-draft').addEventListener('click',()=>download(sessionStorage.getItem(draftKey)||snapshot(),config.id+'-draft.html'));
++$('#reload').addEventListener('click',()=>{if(!dirty||confirm('Reload the current source? Export your draft first if you need to keep it.')){if(!drafts.remove()){report('Local recovery could not be cleared. Export your work before reloading.',true);return;}location.reload();}});
++$('#recover').addEventListener('click',()=>{try{const recovery=drafts.read();if(!recovery.ok)throw Error('Draft storage unavailable. Current source remains usable.');const saved=recovery.value;if(!saved)return;root=parse(saved);dirty=true;mode='edit';$('#recovery').hidden=true;render();report('Recovered local draft. Save still requires source acceptance.');}catch(error){report(error.message,true);}});
++$('#download-draft').addEventListener('click',()=>download(drafts.read().value||snapshot(),config.id+'-draft.html'));
+ window.addEventListener('beforeunload',e=>{if(dirty){remember();e.preventDefault();e.returnValue='';}});
+ window.addEventListener('pagehide',()=>{if(dirty)remember();});
+-async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await response.text());etag=response.headers.get('ETag');baseline=snapshot();$('#recovery').hidden=!sessionStorage.getItem(draftKey);mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');}catch(error){report(error.message,true);$('#manage').disabled=true;}}
++async function init(){try{const response=await fetch('./records/content.html',{cache:'no-store',credentials:'same-origin'});if(!response.ok)throw Error('Cannot read the source ('+response.status+'). Sign in or ask the owner for access.');root=parse(await response.text());etag=response.headers.get('ETag');baseline=snapshot();const recovery=drafts.read();$('#recovery').hidden=!recovery.value;mode=config.private?'edit':'published';render();report(config.private?(acceptedWriter?'Fictional sample records loaded. Saves update only this local preview.':'Fictional sample records loaded. Local edits can be exported; live saving is not connected.'):'Sample content loaded.');if(!recovery.ok)report('Source loaded. Draft storage unavailable; export changes before leaving.',true);}catch(error){report(error.message,true);$('#manage').disabled=true;}}
+ init();
+diff --git a/site/model.mjs b/site/model.mjs
+index 1239eb3..e177254 100644
+--- a/site/model.mjs
++++ b/site/model.mjs
+@@ -14,6 +14,7 @@ export function validate(root,config){
+  if(new TextEncoder().encode(root.outerHTML).length>2000000)throw Error('Document exceeds 2 MB. Export or archive records first.');
+  if(root.querySelector('script,style,iframe,object,embed,form,input,button,link,meta'))throw Error('Unexpected executable content or controls in the source.');
+  const ids=new Set();
++ const allIDs=new Set();for(const el of [root,...root.querySelectorAll('[id]')]){if(el.id&&allIDs.has(el.id))throw Error('Every source DOM identity must be unique.');if(el.id)allIDs.add(el.id); }
+  const allowed=new Set(['section','article','h2','p','span','time']);
+  for(const el of [root,...root.querySelectorAll('*')]){
+   if(!allowed.has(el.tagName.toLowerCase()))throw Error('Unsupported document structure.');
+@@ -45,3 +46,11 @@ export function field(row,key){return [...row.children].find(el=>el.getAttribute
+ export function serialize(root,config){validate(root,config);return '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>'+escape(config.title)+' records</title></head><body>'+root.outerHTML+'</body></html>';}
+ 
+ export function parseLimits(text){const result=new Map();for(const line of text.split('\n').filter(v=>v.trim())){const [label,value,...extra]=line.split('|');if(extra.length||!label?.trim()||!value||result.has(label.trim())||money(value)<0)throw Error('Use one unique category|amount per line.');result.set(label.trim(),money(value));}return result;}
++
++// Canonical format1 documents have exactly one owned aggregate, never a partial match.
++export function parseDocument(text,config,Parser=DOMParser){
++ if(new TextEncoder().encode(text).length>2000000)throw Error('Document exceeds 2 MB. Original retained.');
++ const doc=new Parser().parseFromString(text,'text/html'),roots=doc.querySelectorAll('#records');
++ if(roots.length!==1||doc.body.children.length!==1||doc.body.firstElementChild!==roots[0]||[...doc.body.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))throw Error('Expected exactly one records aggregate without unrelated body content. Original retained.');
++ return validate(roots[0],config);
++}

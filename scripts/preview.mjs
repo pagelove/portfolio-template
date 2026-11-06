@@ -1,6 +1,6 @@
 // Loopback-only persistence fixture. This is not a production authentication server.
 import http from 'node:http';import fs from 'node:fs/promises';import path from 'node:path';import {createHash} from 'node:crypto';import {fileURLToPath} from 'node:url';
-import {DOMParser} from 'linkedom';import {validate} from '../site/model.mjs';import {config} from '../site/config.mjs';
+import {DOMParser} from 'linkedom';import {validate,parseDocument} from '../site/model.mjs';import {config} from '../site/config.mjs';
 const root=path.resolve(fileURLToPath(new URL('../site/',import.meta.url))),state=path.resolve(process.env.PREVIEW_STATE||'.preview-state/content.html'),port=Number(process.env.PORT||4174);
 await fs.mkdir(path.dirname(state),{recursive:true});try{await fs.access(state);}catch{await fs.copyFile(path.join(root,'records/content.html'),state);}
 const etag=bytes=>'"'+createHash('sha256').update(bytes).digest('hex')+'"';
@@ -12,7 +12,7 @@ const server=http.createServer(async(req,res)=>{try{
  if(req.method==='PUT'){
   if(uri!=='/records/content.html'||req.headers.origin!=='http://'+expected){res.writeHead(403);return res.end('Cross-origin or unsupported write');}
   let body='';for await(const chunk of req){body+=chunk;if(Buffer.byteLength(body)>2000000){res.writeHead(413);return res.end('Too large');}}
-  try{validate(new DOMParser().parseFromString(body,'text/html').querySelector('#records'),config);}catch(e){res.writeHead(422);return res.end(e.message);}
+  try{parseDocument(body,config,DOMParser);}catch(e){res.writeHead(422);return res.end(e.message);}
   const task=async()=>{const old=await fs.readFile(state);if(!req.headers['if-match']){res.writeHead(428);return res.end('Precondition required');}if(req.headers['if-match']!==etag(old)){res.writeHead(412);return res.end('Stale revision');}await fs.writeFile(state+'.pending',body);await fs.rename(state+'.pending',state);res.writeHead(204,{ETag:etag(body)});res.end();};queue=queue.then(task,task);await queue;return;
  }
  if(!['GET','HEAD'].includes(req.method)){res.writeHead(405);return res.end('Unsupported method');}

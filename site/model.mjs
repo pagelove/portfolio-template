@@ -14,6 +14,7 @@ export function validate(root,config){
  if(new TextEncoder().encode(root.outerHTML).length>2000000)throw Error('Document exceeds 2 MB. Export or archive records first.');
  if(root.querySelector('script,style,iframe,object,embed,form,input,button,link,meta'))throw Error('Unexpected executable content or controls in the source.');
  const ids=new Set();
+ const allIDs=new Set();for(const el of [root,...root.querySelectorAll('[id]')]){if(el.id&&allIDs.has(el.id))throw Error('Every source DOM identity must be unique.');if(el.id)allIDs.add(el.id); }
  const allowed=new Set(['section','article','h2','p','span','time']);
  for(const el of [root,...root.querySelectorAll('*')]){
   if(!allowed.has(el.tagName.toLowerCase()))throw Error('Unsupported document structure.');
@@ -45,3 +46,11 @@ export function field(row,key){return [...row.children].find(el=>el.getAttribute
 export function serialize(root,config){validate(root,config);return '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>'+escape(config.title)+' records</title></head><body>'+root.outerHTML+'</body></html>';}
 
 export function parseLimits(text){const result=new Map();for(const line of text.split('\n').filter(v=>v.trim())){const [label,value,...extra]=line.split('|');if(extra.length||!label?.trim()||!value||result.has(label.trim())||money(value)<0)throw Error('Use one unique category|amount per line.');result.set(label.trim(),money(value));}return result;}
+
+// Canonical format1 documents have exactly one owned aggregate, never a partial match.
+export function parseDocument(text,config,Parser=DOMParser){
+ if(new TextEncoder().encode(text).length>2000000)throw Error('Document exceeds 2 MB. Original retained.');
+ const doc=new Parser().parseFromString(text,'text/html'),roots=doc.querySelectorAll('#records');
+ if(roots.length!==1||doc.body.children.length!==1||doc.body.firstElementChild!==roots[0]||[...doc.body.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))throw Error('Expected exactly one records aggregate without unrelated body content. Original retained.');
+ return validate(roots[0],config);
+}
